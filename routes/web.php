@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::loginUsingId(1);
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+Route::apiResource('/api/team', 'Api\TeamController');
+
+Route::resource('/api/team/{team}/sprint', 'Api\SprintController')->only(['index', 'store']);
+Route::resource('/api/sprint', 'Api\SprintController')->only(['update', 'destroy', 'show']);
