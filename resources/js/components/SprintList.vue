@@ -122,14 +122,14 @@
         },
         methods: {
             fetchData() {
-                let url = `api/team/${this.$route.params.teamId}/sprint`
+                let url = `/api/team/${this.$route.params.teamId}/sprint`
                 axios.get(url).then(response => {
                     this.sprints = response.data;
                     this.isLoading = false;
                 });
             },
             createSprint() {
-                let url = `api/team/${this.$route.params.teamId}/sprint`
+                let url = `/api/team/${this.$route.params.teamId}/sprint`
                 let postData = this.newSprint;
                 axios.post(url, postData).then(response => {
                     this.sprints.push(response.data);
@@ -163,7 +163,7 @@
                     end: this.editingSprint.end
                 };
 
-                axios.put('api/sprint/' + this.editingSprint.id, putData).then(response => {
+                axios.put('/api/sprint/' + this.editingSprint.id, putData).then(response => {
                     this.sprints = this.sprints.map(s => {
                         if (s.id == this.editingSprint.id) {
                             return response.data;
@@ -177,7 +177,7 @@
             },
             deleteSprint(sprint) {
                 if (confirm('Are you sure?')) {
-                    axios.delete('api/sprint/' + sprint.id).then(response => {
+                    axios.delete('/api/sprint/' + sprint.id).then(response => {
                         this.sprints = this.sprints.filter(t => t.id != sprint.id);
                     });
                 }

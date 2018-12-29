@@ -99,13 +99,13 @@
                 })
             },
             fetchData() {
-                axios.get('api/team').then(response => {
+                axios.get('/api/team').then(response => {
                     this.teams = response.data;
                     this.isLoading = false;
                 });
             },
             createTeam() {
-                axios.post('api/team', { caption: this.newTeamName }).then(response => {
+                axios.post('/api/team', { caption: this.newTeamName }).then(response => {
                     this.teams.push(response.data);
                     this.newTeamName = '';
                 });
@@ -119,7 +119,7 @@
             },
             saveChanges() {
                 let putData = { caption: this.editingTeamCaption };
-                axios.put('api/team/' + this.editingTeamId, putData).then(response => {
+                axios.put('/api/team/' + this.editingTeamId, putData).then(response => {
                     this.teams = this.teams.map(t => {
                         if (t.id == this.editingTeamId) {
                             return response.data;
@@ -134,7 +134,7 @@
             },
             deleteTeam(team) {
                 if (confirm('Are you sure?')) {
-                    axios.delete('api/team/' + team.id).then(response => {
+                    axios.delete('/api/team/' + team.id).then(response => {
                         this.teams = this.teams.filter(t => t.id != team.id);
                     });
                 }

@@ -62,7 +62,7 @@ const routes = [
 ]
 
 window.router = new VueRouter({
-    //mode: 'history',
+    mode: 'history',
     routes: routes,
 });
 

@@ -40,7 +40,7 @@
         },
         methods: {
             createTask() {
-                let url = `api/story/${this.$route.params.storyId}/task`;
+                let url = `/api/story/${this.$route.params.storyId}/task`;
                 let postData = {
                     caption: this.caption,
                     description: this.description,
@@ -58,7 +58,7 @@
             }
         },
         mounted() {
-            let url = `api/story/${this.$route.params.storyId}`;
+            let url = `/api/story/${this.$route.params.storyId}`;
             axios.get(url).then(response => {
                 this.sprintId = response.data.sprint_id;
             });

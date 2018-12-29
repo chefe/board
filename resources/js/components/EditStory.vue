@@ -54,13 +54,13 @@
         },
         methods: {
             fetchData() {
-                let url = `api/story/${this.$route.params.storyId}`;
+                let url = `/api/story/${this.$route.params.storyId}`;
                 axios.get(url).then(response => {
                     this.story = response.data;
                 });
             },
             save() {
-                let url = `api/story/${this.$route.params.storyId}`;
+                let url = `/api/story/${this.$route.params.storyId}`;
                 let putData = {
                     caption: this.story.caption,
                     description: this.story.description,

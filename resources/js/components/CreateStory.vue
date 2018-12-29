@@ -51,7 +51,7 @@
         },
         methods: {
             createStory() {
-                let url = `api/sprint/${this.$route.params.sprintId}/story`;
+                let url = `/api/sprint/${this.$route.params.sprintId}/story`;
                 let postData = {
                     caption: this.caption,
                     description: this.description,

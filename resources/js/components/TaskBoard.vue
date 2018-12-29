@@ -147,25 +147,25 @@
                 this.loadStories();
             },
             loadStates() {
-                axios.get('api/task/state').then(response => {
+                axios.get('/api/task/state').then(response => {
                     this.states = response.data;
                 });
             },
             loadSprint() {
-                let url = `api/sprint/${this.$route.params.sprintId}`;
+                let url = `/api/sprint/${this.$route.params.sprintId}`;
                 axios.get(url).then(response => {
                     this.sprint = response.data;
                     this.loadTeam(this.sprint.team_id);
                 });
             },
             loadTeam(teamId) {
-                let url = `api/team/${teamId}`;
+                let url = `/api/team/${teamId}`;
                 axios.get(url).then(response => {
                     this.team = response.data;
                 });
             },
             loadStories() {
-                let url = `api/sprint/${this.$route.params.sprintId}/story`;
+                let url = `/api/sprint/${this.$route.params.sprintId}/story`;
                 axios.get(url).then(response => {
                     this.stories = response.data;
                     this.tasks = [];
@@ -175,7 +175,7 @@
                 });
             },
             loadTasks(story) {
-                let url = `api/story/${story.id}/task`;
+                let url = `/api/story/${story.id}/task`;
                 axios.get(url).then(response => {
                     response.data.forEach(t => {
                         this.tasks.push(t);
@@ -193,7 +193,7 @@
             },
             onDrop(event, state) {
                 let taskId = event.dataTransfer.getData('text');
-                let url = `api/task/${taskId}`;
+                let url = `/api/task/${taskId}`;
                 let putData = { state_id: state.id };
 
                 axios.put(url, putData).then(response => {
@@ -235,7 +235,7 @@
             },
             deleteStory(story) {
                 if (confirm('Are you sure?')) {
-                    axios.delete('api/story/' + story.id).then(request => {
+                    axios.delete('/api/story/' + story.id).then(request => {
                         this.stories = this.stories.filter(s => s.id != story.id);
                         this.tasks = this.tasks.filter(t => t.story_id != story.id);
                     });
@@ -249,7 +249,7 @@
             },
             deleteTask(task) {
                 if (confirm('Are you sure?')) {
-                    axios.delete('api/task/' + task.id).then(request => {
+                    axios.delete('/api/task/' + task.id).then(request => {
                         this.tasks = this.tasks.filter(t => t.id != task.id);
                     });
                 }

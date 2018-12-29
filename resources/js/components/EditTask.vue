@@ -42,20 +42,20 @@
         },
         methods: {
             fetchData() {
-                let url = `api/task/${this.$route.params.taskId}`;
+                let url = `/api/task/${this.$route.params.taskId}`;
                 axios.get(url).then(response => {
                     this.task = response.data;
                     this.loadStory(this.task.story_id);
                 });
             },
             loadStory(storyId) {
-                let url = `api/story/${storyId}`;
+                let url = `/api/story/${storyId}`;
                 axios.get(url).then(response => {
                     this.sprintId = response.data.sprint_id;
                 });
             },
             save() {
-                let url = `api/task/${this.$route.params.taskId}`;
+                let url = `/api/task/${this.$route.params.taskId}`;
                 let putData = {
                     caption: this.task.caption,
                     description: this.task.description,

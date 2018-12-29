@@ -1848,7 +1848,7 @@ __webpack_require__.r(__webpack_exports__);
     createStory: function createStory() {
       var _this = this;
 
-      var url = "api/sprint/".concat(this.$route.params.sprintId, "/story");
+      var url = "/api/sprint/".concat(this.$route.params.sprintId, "/story");
       var postData = {
         caption: this.caption,
         description: this.description,
@@ -1923,7 +1923,7 @@ __webpack_require__.r(__webpack_exports__);
     createTask: function createTask() {
       var _this = this;
 
-      var url = "api/story/".concat(this.$route.params.storyId, "/task");
+      var url = "/api/story/".concat(this.$route.params.storyId, "/task");
       var postData = {
         caption: this.caption,
         description: this.description
@@ -1944,7 +1944,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this2 = this;
 
-    var url = "api/story/".concat(this.$route.params.storyId);
+    var url = "/api/story/".concat(this.$route.params.storyId);
     axios.get(url).then(function (response) {
       _this2.sprintId = response.data.sprint_id;
     });
@@ -2019,7 +2019,7 @@ __webpack_require__.r(__webpack_exports__);
     fetchData: function fetchData() {
       var _this = this;
 
-      var url = "api/story/".concat(this.$route.params.storyId);
+      var url = "/api/story/".concat(this.$route.params.storyId);
       axios.get(url).then(function (response) {
         _this.story = response.data;
       });
@@ -2027,7 +2027,7 @@ __webpack_require__.r(__webpack_exports__);
     save: function save() {
       var _this2 = this;
 
-      var url = "api/story/".concat(this.$route.params.storyId);
+      var url = "/api/story/".concat(this.$route.params.storyId);
       var putData = {
         caption: this.story.caption,
         description: this.story.description,
@@ -2107,7 +2107,7 @@ __webpack_require__.r(__webpack_exports__);
     fetchData: function fetchData() {
       var _this = this;
 
-      var url = "api/task/".concat(this.$route.params.taskId);
+      var url = "/api/task/".concat(this.$route.params.taskId);
       axios.get(url).then(function (response) {
         _this.task = response.data;
 
@@ -2117,7 +2117,7 @@ __webpack_require__.r(__webpack_exports__);
     loadStory: function loadStory(storyId) {
       var _this2 = this;
 
-      var url = "api/story/".concat(storyId);
+      var url = "/api/story/".concat(storyId);
       axios.get(url).then(function (response) {
         _this2.sprintId = response.data.sprint_id;
       });
@@ -2125,7 +2125,7 @@ __webpack_require__.r(__webpack_exports__);
     save: function save() {
       var _this3 = this;
 
-      var url = "api/task/".concat(this.$route.params.taskId);
+      var url = "/api/task/".concat(this.$route.params.taskId);
       var putData = {
         caption: this.task.caption,
         description: this.task.description
@@ -2317,7 +2317,7 @@ __webpack_require__.r(__webpack_exports__);
     fetchData: function fetchData() {
       var _this = this;
 
-      var url = "api/team/".concat(this.$route.params.teamId, "/sprint");
+      var url = "/api/team/".concat(this.$route.params.teamId, "/sprint");
       axios.get(url).then(function (response) {
         _this.sprints = response.data;
         _this.isLoading = false;
@@ -2326,7 +2326,7 @@ __webpack_require__.r(__webpack_exports__);
     createSprint: function createSprint() {
       var _this2 = this;
 
-      var url = "api/team/".concat(this.$route.params.teamId, "/sprint");
+      var url = "/api/team/".concat(this.$route.params.teamId, "/sprint");
       var postData = this.newSprint;
       axios.post(url, postData).then(function (response) {
         _this2.sprints.push(response.data);
@@ -2364,7 +2364,7 @@ __webpack_require__.r(__webpack_exports__);
         start: this.editingSprint.start,
         end: this.editingSprint.end
       };
-      axios.put('api/sprint/' + this.editingSprint.id, putData).then(function (response) {
+      axios.put('/api/sprint/' + this.editingSprint.id, putData).then(function (response) {
         _this3.sprints = _this3.sprints.map(function (s) {
           if (s.id == _this3.editingSprint.id) {
             return response.data;
@@ -2380,7 +2380,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       if (confirm('Are you sure?')) {
-        axios.delete('api/sprint/' + sprint.id).then(function (response) {
+        axios.delete('/api/sprint/' + sprint.id).then(function (response) {
           _this4.sprints = _this4.sprints.filter(function (t) {
             return t.id != sprint.id;
           });
@@ -2554,14 +2554,14 @@ __webpack_require__.r(__webpack_exports__);
     loadStates: function loadStates() {
       var _this = this;
 
-      axios.get('api/task/state').then(function (response) {
+      axios.get('/api/task/state').then(function (response) {
         _this.states = response.data;
       });
     },
     loadSprint: function loadSprint() {
       var _this2 = this;
 
-      var url = "api/sprint/".concat(this.$route.params.sprintId);
+      var url = "/api/sprint/".concat(this.$route.params.sprintId);
       axios.get(url).then(function (response) {
         _this2.sprint = response.data;
 
@@ -2571,7 +2571,7 @@ __webpack_require__.r(__webpack_exports__);
     loadTeam: function loadTeam(teamId) {
       var _this3 = this;
 
-      var url = "api/team/".concat(teamId);
+      var url = "/api/team/".concat(teamId);
       axios.get(url).then(function (response) {
         _this3.team = response.data;
       });
@@ -2579,7 +2579,7 @@ __webpack_require__.r(__webpack_exports__);
     loadStories: function loadStories() {
       var _this4 = this;
 
-      var url = "api/sprint/".concat(this.$route.params.sprintId, "/story");
+      var url = "/api/sprint/".concat(this.$route.params.sprintId, "/story");
       axios.get(url).then(function (response) {
         _this4.stories = response.data;
         _this4.tasks = [];
@@ -2592,7 +2592,7 @@ __webpack_require__.r(__webpack_exports__);
     loadTasks: function loadTasks(story) {
       var _this5 = this;
 
-      var url = "api/story/".concat(story.id, "/task");
+      var url = "/api/story/".concat(story.id, "/task");
       axios.get(url).then(function (response) {
         response.data.forEach(function (t) {
           _this5.tasks.push(t);
@@ -2612,7 +2612,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this6 = this;
 
       var taskId = event.dataTransfer.getData('text');
-      var url = "api/task/".concat(taskId);
+      var url = "/api/task/".concat(taskId);
       var putData = {
         state_id: state.id
       };
@@ -2665,7 +2665,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this7 = this;
 
       if (confirm('Are you sure?')) {
-        axios.delete('api/story/' + story.id).then(function (request) {
+        axios.delete('/api/story/' + story.id).then(function (request) {
           _this7.stories = _this7.stories.filter(function (s) {
             return s.id != story.id;
           });
@@ -2687,7 +2687,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this8 = this;
 
       if (confirm('Are you sure?')) {
-        axios.delete('api/task/' + task.id).then(function (request) {
+        axios.delete('/api/task/' + task.id).then(function (request) {
           _this8.tasks = _this8.tasks.filter(function (t) {
             return t.id != task.id;
           });
@@ -2815,7 +2815,7 @@ __webpack_require__.r(__webpack_exports__);
     fetchData: function fetchData() {
       var _this = this;
 
-      axios.get('api/team').then(function (response) {
+      axios.get('/api/team').then(function (response) {
         _this.teams = response.data;
         _this.isLoading = false;
       });
@@ -2823,7 +2823,7 @@ __webpack_require__.r(__webpack_exports__);
     createTeam: function createTeam() {
       var _this2 = this;
 
-      axios.post('api/team', {
+      axios.post('/api/team', {
         caption: this.newTeamName
       }).then(function (response) {
         _this2.teams.push(response.data);
@@ -2844,7 +2844,7 @@ __webpack_require__.r(__webpack_exports__);
       var putData = {
         caption: this.editingTeamCaption
       };
-      axios.put('api/team/' + this.editingTeamId, putData).then(function (response) {
+      axios.put('/api/team/' + this.editingTeamId, putData).then(function (response) {
         _this3.teams = _this3.teams.map(function (t) {
           if (t.id == _this3.editingTeamId) {
             return response.data;
@@ -2860,7 +2860,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       if (confirm('Are you sure?')) {
-        axios.delete('api/team/' + team.id).then(function (response) {
+        axios.delete('/api/team/' + team.id).then(function (response) {
           _this4.teams = _this4.teams.filter(function (t) {
             return t.id != team.id;
           });
@@ -53196,7 +53196,7 @@ var routes = [{
   component: __webpack_require__(/*! ./components/EditTask.vue */ "./resources/js/components/EditTask.vue").default
 }];
 window.router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
-  //mode: 'history',
+  mode: 'history',
   routes: routes
 });
 var app = new Vue({
