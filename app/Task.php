@@ -8,4 +8,10 @@ class Task extends Model
 {
     /** */
     protected $guarded = [];
+
+    /** */
+    public function story()
+    {
+        return $this->belongsTo(Story::class);
+    }
 }

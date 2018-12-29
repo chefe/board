@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\User;
+use App\Task;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TaskPolicy
@@ -10,14 +11,14 @@ class TaskPolicy
     use HandlesAuthorization;
 
     /** */
-    public function edit()
+    public function edit(User $user, Task $task)
     {
-        return true;
+        return $task->story->sprint->team->user_id == $user->id;
     }
 
     /** */
-    public function delete()
+    public function delete(User $user, Task $task)
     {
-        return true;
+        return $task->story->sprint->team->user_id == $user->id;
     }
 }

@@ -2517,10 +2517,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       showTaskDescription: false,
+      fullscreenMode: false,
       sprint: {
         caption: ''
       },
@@ -38584,338 +38591,366 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row mb-4" }, [
-      _c("div", { staticClass: "col d-flex" }, [
-        _c("nav", { staticClass: "flex-grow-1" }, [
-          _c("ol", { staticClass: "breadcrumb bg-transparent px-0 mb-0" }, [
-            _c(
-              "li",
-              { staticClass: "breadcrumb-item" },
-              [
-                _c("router-link", {
-                  attrs: {
-                    to: {
-                      name: "sprint.index",
-                      params: { teamId: _vm.team.id }
-                    }
-                  },
-                  domProps: { textContent: _vm._s(_vm.team.caption) }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("li", {
-              staticClass: "breadcrumb-item active",
-              domProps: { textContent: _vm._s(_vm.sprint.caption) }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-outline-dark",
-            class: { active: _vm.showTaskDescription },
-            on: {
-              click: function($event) {
-                _vm.showTaskDescription = !_vm.showTaskDescription
-              }
-            }
-          },
-          [_vm._v("Show Details")]
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col" }, [
-        _c("table", { staticClass: "table" }, [
-          _c("thead", [
-            _c(
-              "tr",
-              [
-                _c("th", { attrs: { width: _vm.tableColWidth } }, [
-                  _vm._v("STORIES")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.states, function(state) {
-                  return _c("th", {
-                    attrs: { width: _vm.tableColWidth },
-                    domProps: {
-                      textContent: _vm._s(state.caption.toUpperCase())
-                    }
+  return _c(
+    "div",
+    { class: { container: !_vm.fullscreenMode, "px-5": _vm.fullscreenMode } },
+    [
+      _c("div", { staticClass: "row mb-4" }, [
+        _c("div", { staticClass: "col d-flex" }, [
+          _c("nav", { staticClass: "flex-grow-1" }, [
+            _c("ol", { staticClass: "breadcrumb bg-transparent px-0 mb-0" }, [
+              _c(
+                "li",
+                { staticClass: "breadcrumb-item" },
+                [
+                  _c("router-link", {
+                    attrs: {
+                      to: {
+                        name: "sprint.index",
+                        params: { teamId: _vm.team.id }
+                      }
+                    },
+                    domProps: { textContent: _vm._s(_vm.team.caption) }
                   })
-                })
-              ],
-              2
-            )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("li", {
+                staticClass: "breadcrumb-item active",
+                domProps: { textContent: _vm._s(_vm.sprint.caption) }
+              })
+            ])
           ]),
           _vm._v(" "),
-          _c(
-            "tbody",
-            [
-              _vm._l(_vm.stories, function(story) {
-                return _c(
-                  "tr",
-                  [
-                    _c("td", [
-                      _c("div", { staticClass: "d-flex" }, [
-                        _c("div", { staticClass: "flex-grow-1" }, [
-                          _c("strong", [_vm._v(_vm._s(story.caption))]),
+          _c("div", { staticClass: "btn-group" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-dark",
+                class: { active: _vm.showTaskDescription },
+                on: {
+                  click: function($event) {
+                    _vm.showTaskDescription = !_vm.showTaskDescription
+                  }
+                }
+              },
+              [_vm._v("Show Details")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-dark",
+                class: { active: _vm.fullscreenMode },
+                on: {
+                  click: function($event) {
+                    _vm.fullscreenMode = !_vm.fullscreenMode
+                  }
+                }
+              },
+              [_vm._v("Fullscreen Mode")]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col" }, [
+          _c("table", { staticClass: "table" }, [
+            _c("thead", [
+              _c(
+                "tr",
+                [
+                  _c("th", { attrs: { width: _vm.tableColWidth } }, [
+                    _vm._v("STORIES")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.states, function(state) {
+                    return _c("th", {
+                      attrs: { width: _vm.tableColWidth },
+                      domProps: {
+                        textContent: _vm._s(state.caption.toUpperCase())
+                      }
+                    })
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              [
+                _vm._l(_vm.stories, function(story) {
+                  return _c(
+                    "tr",
+                    [
+                      _c("td", [
+                        _c("div", { staticClass: "d-flex" }, [
+                          _c("div", { staticClass: "flex-grow-1" }, [
+                            _c("strong", [_vm._v(_vm._s(story.caption))]),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticClass: "badge badge-secondary" },
+                              [_vm._v(_vm._s(story.points))]
+                            )
+                          ]),
                           _vm._v(" "),
-                          _c("span", { staticClass: "badge badge-secondary" }, [
-                            _vm._v(_vm._s(story.points))
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-sm btn-light",
-                            on: {
-                              click: function($event) {
-                                _vm.editStory(story)
-                              }
-                            }
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
-                                staticClass: "icon",
-                                attrs: { viewBox: "0 0 20 20" }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "currentColor",
-                                    d:
-                                      "M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-sm btn-light",
-                            on: {
-                              click: function($event) {
-                                _vm.deleteStory(story)
-                              }
-                            }
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
-                                staticClass: "icon",
-                                attrs: { viewBox: "0 0 20 20" }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "currentColor",
-                                    d:
-                                      "M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("p", {
-                        domProps: { textContent: _vm._s(story.description) }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "btn btn-block btn-light text-muted rounded-0 border border-dashed",
-                          on: {
-                            click: function($event) {
-                              _vm.addNewTask(story)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                Add a new task\n                            "
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.states, function(state) {
-                      return _c(
-                        "td",
-                        {
-                          staticClass: "pb-1",
-                          on: {
-                            drop: function($event) {
-                              _vm.onDrop($event, state)
-                            },
-                            dragover: function($event) {
-                              _vm.onDragOver($event, state, story)
-                            }
-                          }
-                        },
-                        _vm._l(_vm.getTasksForState(story, state), function(
-                          task
-                        ) {
-                          return _c(
-                            "div",
+                          _c(
+                            "button",
                             {
-                              staticClass: "card mb-2",
-                              attrs: { draggable: true },
+                              staticClass: "btn btn-sm btn-light",
                               on: {
-                                dragstart: function($event) {
-                                  _vm.onDragStart($event, task)
+                                click: function($event) {
+                                  _vm.editStory(story)
                                 }
                               }
                             },
                             [
                               _c(
-                                "div",
+                                "svg",
                                 {
-                                  staticClass:
-                                    "card-header d-flex p-2 align-items-center",
-                                  class: {
-                                    "border-bottom-0":
-                                      !_vm.showTaskDescription ||
-                                      !task.description
-                                  }
+                                  staticClass: "icon",
+                                  attrs: { viewBox: "0 0 20 20" }
                                 },
                                 [
-                                  _c("h5", {
-                                    staticClass: "mb-0 flex-grow-1",
-                                    domProps: {
-                                      textContent: _vm._s(task.caption)
+                                  _c("path", {
+                                    attrs: {
+                                      fill: "currentColor",
+                                      d:
+                                        "M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"
                                     }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-sm btn-light",
-                                      on: {
-                                        click: function($event) {
-                                          _vm.editTask(task)
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "svg",
-                                        {
-                                          staticClass: "icon",
-                                          attrs: { viewBox: "0 0 20 20" }
-                                        },
-                                        [
-                                          _c("path", {
-                                            attrs: {
-                                              fill: "currentColor",
-                                              d:
-                                                "M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"
-                                            }
-                                          })
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-sm btn-light",
-                                      on: {
-                                        click: function($event) {
-                                          _vm.deleteTask(task)
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "svg",
-                                        {
-                                          staticClass: "icon",
-                                          attrs: { viewBox: "0 0 20 20" }
-                                        },
-                                        [
-                                          _c("path", {
-                                            attrs: {
-                                              fill: "currentColor",
-                                              d:
-                                                "M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"
-                                            }
-                                          })
-                                        ]
-                                      )
-                                    ]
-                                  )
+                                  })
                                 ]
-                              ),
-                              _vm._v(" "),
-                              _vm.showTaskDescription && task.description
-                                ? _c("div", { staticClass: "card-body p-2" }, [
-                                    _c("p", {
-                                      staticClass: "card-text mt-2",
-                                      domProps: {
-                                        textContent: _vm._s(task.description)
-                                      }
-                                    })
-                                  ])
-                                : _vm._e()
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-light",
+                              on: {
+                                click: function($event) {
+                                  _vm.deleteStory(story)
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "svg",
+                                {
+                                  staticClass: "icon",
+                                  attrs: { viewBox: "0 0 20 20" }
+                                },
+                                [
+                                  _c("path", {
+                                    attrs: {
+                                      fill: "currentColor",
+                                      d:
+                                        "M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"
+                                    }
+                                  })
+                                ]
+                              )
                             ]
                           )
+                        ]),
+                        _vm._v(" "),
+                        _c("p", {
+                          domProps: { textContent: _vm._s(story.description) }
                         }),
-                        0
-                      )
-                    })
-                  ],
-                  2
-                )
-              }),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "p-0 pt-1",
-                    attrs: { colspan: _vm.states.length + 1 }
-                  },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "btn btn-block btn-light p-3 text-muted rounded-0 border border-dashed",
-                        on: { click: _vm.addNewStory }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                Add a new story\n                            "
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-block btn-light text-muted rounded-0 border border-dashed",
+                            on: {
+                              click: function($event) {
+                                _vm.addNewTask(story)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Add a new task\n                            "
+                            )
+                          ]
                         )
-                      ]
-                    )
-                  ]
-                )
-              ])
-            ],
-            2
-          )
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.states, function(state) {
+                        return _c(
+                          "td",
+                          {
+                            staticClass: "pb-1",
+                            on: {
+                              drop: function($event) {
+                                _vm.onDrop($event, state)
+                              },
+                              dragover: function($event) {
+                                _vm.onDragOver($event, state, story)
+                              }
+                            }
+                          },
+                          _vm._l(_vm.getTasksForState(story, state), function(
+                            task
+                          ) {
+                            return _c(
+                              "div",
+                              {
+                                staticClass: "card mb-2",
+                                attrs: { draggable: true },
+                                on: {
+                                  dragstart: function($event) {
+                                    _vm.onDragStart($event, task)
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "card-header d-flex p-2 align-items-center",
+                                    class: {
+                                      "border-bottom-0":
+                                        !_vm.showTaskDescription ||
+                                        !task.description
+                                    }
+                                  },
+                                  [
+                                    _c("h5", {
+                                      staticClass: "mb-0 flex-grow-1",
+                                      domProps: {
+                                        textContent: _vm._s(task.caption)
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-sm btn-light",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.editTask(task)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "svg",
+                                          {
+                                            staticClass: "icon",
+                                            attrs: { viewBox: "0 0 20 20" }
+                                          },
+                                          [
+                                            _c("path", {
+                                              attrs: {
+                                                fill: "currentColor",
+                                                d:
+                                                  "M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"
+                                              }
+                                            })
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-sm btn-light",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.deleteTask(task)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "svg",
+                                          {
+                                            staticClass: "icon",
+                                            attrs: { viewBox: "0 0 20 20" }
+                                          },
+                                          [
+                                            _c("path", {
+                                              attrs: {
+                                                fill: "currentColor",
+                                                d:
+                                                  "M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"
+                                              }
+                                            })
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _vm.showTaskDescription && task.description
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "card-body p-2" },
+                                      [
+                                        _c("p", {
+                                          staticClass: "card-text mt-2",
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              task.description
+                                            )
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ]
+                            )
+                          }),
+                          0
+                        )
+                      })
+                    ],
+                    2
+                  )
+                }),
+                _vm._v(" "),
+                _c("tr", [
+                  _c(
+                    "td",
+                    {
+                      staticClass: "p-0 pt-1",
+                      attrs: { colspan: _vm.states.length + 1 }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-block btn-light p-3 text-muted rounded-0 border border-dashed",
+                          on: { click: _vm.addNewStory }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                Add a new story\n                            "
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              ],
+              2
+            )
+          ])
         ])
       ])
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

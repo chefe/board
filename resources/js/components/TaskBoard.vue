@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div :class="{ 'container': !fullscreenMode, 'px-5': fullscreenMode }">
         <div class="row mb-4">
             <div class="col d-flex">
                 <nav class="flex-grow-1">
@@ -12,10 +12,16 @@
                         <li class="breadcrumb-item active" v-text="sprint.caption"></li>
                     </ol>
                 </nav>
-                <button
-                    class="btn btn-outline-dark"
-                    @click="showTaskDescription = !showTaskDescription"
-                    :class="{ 'active': showTaskDescription}">Show Details</button>
+                <div class="btn-group">
+                    <button
+                        class="btn btn-outline-dark"
+                        @click="showTaskDescription = !showTaskDescription"
+                        :class="{ 'active': showTaskDescription}">Show Details</button>
+                    <button
+                        class="btn btn-outline-dark"
+                        @click="fullscreenMode = !fullscreenMode"
+                        :class="{ 'active': fullscreenMode }">Fullscreen Mode</button>
+                </div>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -116,6 +122,7 @@
         data() {
             return {
                 showTaskDescription: false,
+                fullscreenMode: false,
                 sprint: {
                     caption: ''
                 },
