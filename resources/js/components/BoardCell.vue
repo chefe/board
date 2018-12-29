@@ -2,7 +2,7 @@
     <td
         @drop="onDrop($event, state)"
         @dragover="onDragOver($event, state, story)"
-        class="pb-1">
+        class="pb-1 border-left border-left-dashed">
         <slot></slot>
     </td>
 </template>

@@ -9,7 +9,10 @@
                                 v-text="team.caption"
                                 :to="{ name: 'sprint.index', params: { teamId: team.id }}"></router-link>
                         </li>
-                        <li class="breadcrumb-item active" v-text="sprint.caption"></li>
+                        <li class="breadcrumb-item active">
+                            {{ sprint.caption}}
+                            <small class="ml-2" v-text="sprintDuration"></small>
+                        </li>
                     </ol>
                 </nav>
                 <div class="btn-group">
@@ -77,7 +80,9 @@
                 showTaskDescription: false,
                 fullscreenMode: false,
                 sprint: {
-                    caption: ''
+                    caption: '',
+                    start: '',
+                    end: ''
                 },
                 team: {
                     id: -1,
@@ -91,6 +96,9 @@
         computed: {
             tableColWidth() {
                 return 1 / (this.states.length + 1) * 100 + '%';
+            },
+            sprintDuration() {
+                return this.sprint.start.split(' ')[0] + ' - ' + this.sprint.end.split(' ')[0];
             }
         },
         methods: {

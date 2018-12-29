@@ -2657,13 +2657,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       showTaskDescription: false,
       fullscreenMode: false,
       sprint: {
-        caption: ''
+        caption: '',
+        start: '',
+        end: ''
       },
       team: {
         id: -1,
@@ -2677,6 +2682,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     tableColWidth: function tableColWidth() {
       return 1 / (this.states.length + 1) * 100 + '%';
+    },
+    sprintDuration: function sprintDuration() {
+      return this.sprint.start.split(' ')[0] + ' - ' + this.sprint.end.split(' ')[0];
     }
   },
   methods: {
@@ -47862,7 +47870,7 @@ var render = function() {
   return _c(
     "td",
     {
-      staticClass: "pb-1",
+      staticClass: "pb-1 border-left border-left-dashed",
       on: {
         drop: function($event) {
           _vm.onDrop($event, _vm.state)
@@ -49006,10 +49014,17 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("li", {
-                staticClass: "breadcrumb-item active",
-                domProps: { textContent: _vm._s(_vm.sprint.caption) }
-              })
+              _c("li", { staticClass: "breadcrumb-item active" }, [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(_vm.sprint.caption) +
+                    "\n                        "
+                ),
+                _c("small", {
+                  staticClass: "ml-2",
+                  domProps: { textContent: _vm._s(_vm.sprintDuration) }
+                })
+              ])
             ])
           ]),
           _vm._v(" "),
