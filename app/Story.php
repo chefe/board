@@ -14,4 +14,10 @@ class Story extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    /** */
+    public function sprint()
+    {
+        return $this->belongsTo(Sprint::class);
+    }
 }

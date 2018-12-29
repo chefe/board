@@ -50,6 +50,14 @@ const routes = [
         path: '/story/:storyId/task/create',
         name: 'task.create',
         component: require('./components/CreateTask.vue').default
+    }, {
+        path: '/story/:storyId/edit',
+        name: 'story.edit',
+        component: require('./components/EditStory.vue').default
+    }, {
+        path: '/task/:taskId/edit',
+        name: 'task.edit',
+        component: require('./components/EditTask.vue').default
     },
 ]
 

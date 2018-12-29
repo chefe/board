@@ -1,6 +1,6 @@
 <template>
     <center-card>
-        <template slot="header">Create a story</template>
+        <template slot="header">Edit story</template>
 
         <div class="form-group">
             <label for="nameInput">Name</label>
@@ -8,7 +8,7 @@
                 type="text"
                 class="form-control"
                 id="nameInput"
-                v-model="caption"
+                v-model="story.caption"
                 placeholder="Enter a name for the story">
         </div>
         <div class="form-group">
@@ -17,7 +17,7 @@
                 class="form-control"
                 id="descriptionTextarea"
                 placeholder="Enter a description for the story"
-                v-model="description"
+                v-model="story.description"
                 rows="3"></textarea>
         </div>
         <div class="form-group">
@@ -28,12 +28,12 @@
                 min="0"
                 max="255"
                 placeholder="Enter the points for the story"
-                v-model="points"
+                v-model="story.points"
                 id="pointsInput">
         </div>
         <button
-            @click="createStory"
-            class="btn btn-primary">Create</button>
+            @click="save"
+            class="btn btn-primary">Save</button>
         <button
             @click="goToBoard"
             class="btn btn-secondary">Cancel</button>
@@ -44,30 +44,42 @@
     export default {
         data() {
             return {
-                caption: '',
-                description: '',
-                points: ''
+                story: {
+                    caption: '',
+                    description: '',
+                    points: '',
+                    sprint_id: -1
+                }
             }
         },
         methods: {
-            createStory() {
-                let url = `api/sprint/${this.$route.params.sprintId}/story`;
-                let postData = {
-                    caption: this.caption,
-                    description: this.description,
-                    points: this.points,
+            fetchData() {
+                let url = `api/story/${this.$route.params.storyId}`;
+                axios.get(url).then(response => {
+                    this.story = response.data;
+                });
+            },
+            save() {
+                let url = `api/story/${this.$route.params.storyId}`;
+                let putData = {
+                    caption: this.story.caption,
+                    description: this.story.description,
+                    points: this.story.points,
                 };
 
-                axios.post(url, postData).then(response => {
+                axios.put(url, putData).then(response => {
                     this.goToBoard();
                 });
             },
             goToBoard() {
                 window.router.push({
                     name: 'board.show',
-                    params: { sprintId: this.$route.params.sprintId }
+                    params: { sprintId: this.story.sprint_id }
                 })
             }
+        },
+        mounted() {
+            this.fetchData();
         }
     }
 </script>

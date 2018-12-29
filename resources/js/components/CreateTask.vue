@@ -1,40 +1,32 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card card-default">
-                    <div class="card-header">Create a task</div>
+    <center-card>
+        <template slot="header">Create a task</template>
 
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="nameInput">Name</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="nameInput"
-                                v-model="caption"
-                                placeholder="Enter a name for the story">
-                        </div>
-                        <div class="form-group">
-                            <label for="descriptionTextarea">Description</label>
-                            <textarea
-                                class="form-control"
-                                id="descriptionTextarea"
-                                placeholder="Enter a description for the story"
-                                v-model="description"
-                                rows="3"></textarea>
-                        </div>
-                        <button
-                            @click="createTask"
-                            class="btn btn-primary">Create</button>
-                        <button
-                            @click="goToBoard"
-                            class="btn btn-secondary">Cancel</button>
-                    </div>
-                </div>
-            </div>
+        <div class="form-group">
+            <label for="nameInput">Name</label>
+            <input
+                type="text"
+                class="form-control"
+                id="nameInput"
+                v-model="caption"
+                placeholder="Enter a name for the story">
         </div>
-    </div>
+        <div class="form-group">
+            <label for="descriptionTextarea">Description</label>
+            <textarea
+                class="form-control"
+                id="descriptionTextarea"
+                placeholder="Enter a description for the story"
+                v-model="description"
+                rows="3"></textarea>
+        </div>
+        <button
+            @click="createTask"
+            class="btn btn-primary">Create</button>
+        <button
+            @click="goToBoard"
+            class="btn btn-secondary">Cancel</button>
+    </center-card>
 </template>
 
 <script>

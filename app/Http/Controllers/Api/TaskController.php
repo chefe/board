@@ -43,9 +43,9 @@ class TaskController extends Controller
         $this->authorize('edit', $task);
 
         $data = $request->validate([
-            'caption' => 'required|string|min:3',
+            'caption' => 'string|min:3',
             'description' => 'nullable|string|min:3',
-            'state_id' => 'required|integer|exists:task_states,id'
+            'state_id' => 'integer|exists:task_states,id'
         ]);
 
         $task->update($data);
