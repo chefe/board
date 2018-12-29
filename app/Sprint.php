@@ -23,4 +23,10 @@ class Sprint extends Model
     {
         return $this->hasMany(Story::class);
     }
+
+    /** */
+    public function tasks()
+    {
+        return $this->hasManyThrough(Task::class, Story::class);
+    }
 }

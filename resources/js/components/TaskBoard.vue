@@ -96,44 +96,13 @@
         },
         methods: {
             fetchData() {
-                this.loadStates();
-                this.loadSprint();
-                this.loadStories();
-            },
-            loadStates() {
-                axios.get('/api/task/state').then(response => {
-                    this.states = response.data;
-                });
-            },
-            loadSprint() {
-                let url = `/api/sprint/${this.$route.params.sprintId}`;
+                let url = `/api/sprint/${this.$route.params.sprintId}/board`;
                 axios.get(url).then(response => {
-                    this.sprint = response.data;
-                    this.loadTeam(this.sprint.team_id);
-                });
-            },
-            loadTeam(teamId) {
-                let url = `/api/team/${teamId}`;
-                axios.get(url).then(response => {
-                    this.team = response.data;
-                });
-            },
-            loadStories() {
-                let url = `/api/sprint/${this.$route.params.sprintId}/story`;
-                axios.get(url).then(response => {
-                    this.stories = response.data;
-                    this.tasks = [];
-                    this.stories.forEach(s => {
-                        this.loadTasks(s);
-                    });
-                });
-            },
-            loadTasks(story) {
-                let url = `/api/story/${story.id}/task`;
-                axios.get(url).then(response => {
-                    response.data.forEach(t => {
-                        this.tasks.push(t);
-                    });
+                    this.sprint = response.data.sprint;
+                    this.team = response.data.team;
+                    this.stories = response.data.stories;
+                    this.tasks = response.data.tasks;
+                    this.states = response.data.states;
                 });
             },
             getTasksForState(story, state) {

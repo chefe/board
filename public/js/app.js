@@ -2690,56 +2690,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     fetchData: function fetchData() {
-      this.loadStates();
-      this.loadSprint();
-      this.loadStories();
-    },
-    loadStates: function loadStates() {
       var _this = this;
 
-      axios.get('/api/task/state').then(function (response) {
-        _this.states = response.data;
-      });
-    },
-    loadSprint: function loadSprint() {
-      var _this2 = this;
-
-      var url = "/api/sprint/".concat(this.$route.params.sprintId);
+      var url = "/api/sprint/".concat(this.$route.params.sprintId, "/board");
       axios.get(url).then(function (response) {
-        _this2.sprint = response.data;
-
-        _this2.loadTeam(_this2.sprint.team_id);
-      });
-    },
-    loadTeam: function loadTeam(teamId) {
-      var _this3 = this;
-
-      var url = "/api/team/".concat(teamId);
-      axios.get(url).then(function (response) {
-        _this3.team = response.data;
-      });
-    },
-    loadStories: function loadStories() {
-      var _this4 = this;
-
-      var url = "/api/sprint/".concat(this.$route.params.sprintId, "/story");
-      axios.get(url).then(function (response) {
-        _this4.stories = response.data;
-        _this4.tasks = [];
-
-        _this4.stories.forEach(function (s) {
-          _this4.loadTasks(s);
-        });
-      });
-    },
-    loadTasks: function loadTasks(story) {
-      var _this5 = this;
-
-      var url = "/api/story/".concat(story.id, "/task");
-      axios.get(url).then(function (response) {
-        response.data.forEach(function (t) {
-          _this5.tasks.push(t);
-        });
+        _this.sprint = response.data.sprint;
+        _this.team = response.data.team;
+        _this.stories = response.data.stories;
+        _this.tasks = response.data.tasks;
+        _this.states = response.data.states;
       });
     },
     getTasksForState: function getTasksForState(story, state) {
