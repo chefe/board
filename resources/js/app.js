@@ -30,8 +30,27 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
-    { path: '/', component: require('./components/TeamList.vue').default },
-    { path: '/team/:teamId/sprint', name: 'sprint.index', component: require('./components/SprintList.vue').default },
+    {
+        path: '/',
+        name: 'team.index',
+        component: require('./components/TeamList.vue').default
+    }, {
+        path: '/team/:teamId/sprint',
+        name: 'sprint.index',
+        component: require('./components/SprintList.vue').default
+    }, {
+        path: '/sprint/:sprintId/board',
+        name: 'board.show',
+        component: require('./components/TaskBoard.vue').default
+    }, {
+        path: '/sprint/:sprintId/story/create',
+        name: 'story.create',
+        component: require('./components/CreateStory.vue').default
+    }, {
+        path: '/story/:storyId/task/create',
+        name: 'task.create',
+        component: require('./components/CreateTask.vue').default
+    },
 ]
 
 window.router = new VueRouter({

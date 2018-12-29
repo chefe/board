@@ -15,6 +15,8 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         \App\Team::class => \App\Policies\TeamPolicy::class,
         \App\Sprint::class => \App\Policies\SprintPolicy::class,
+        \App\Story::class => \App\Policies\StoryPolicy::class,
+        \App\Task::class => \App\Policies\TaskPolicy::class,
     ];
 
     /**

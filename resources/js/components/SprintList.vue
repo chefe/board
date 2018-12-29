@@ -7,6 +7,7 @@
                         <a
                             href="#"
                             class="flex-grow-1 text-dark"
+                            @click.prevent="show(sprint)"
                             v-show="editingSprint.id != sprint.id">
                             {{ sprint.caption }}
                             <small>{{ getDuration(sprint) }}</small>
@@ -136,6 +137,12 @@
                     this.newSprint.start = '';
                     this.newSprint.end = '';
                 });
+            },
+            show(sprint) {
+                window.router.push({
+                    name: 'board.show',
+                    params: { sprintId: sprint.id }
+                })
             },
             editSprint(sprint) {
                 this.editingSprint.id = sprint.id;

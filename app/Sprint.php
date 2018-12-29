@@ -17,4 +17,10 @@ class Sprint extends Model
     {
         return $this->belongsTo(Team::class);
     }
+
+    /** */
+    public function stories()
+    {
+        return $this->hasMany(Story::class);
+    }
 }
