@@ -46,12 +46,11 @@
                                 :state="state"
                                 :story="story"
                                 :tasks="tasks"
-                                :key="story.id + '-' + state.id"
-                                @updateTask="updateTask">
+                                :key="'cell' + story.id + '-' + state.id">
                                 <task
                                     v-for="task in getTasksForState(story, state)"
                                     :showTaskDescription="showTaskDescription"
-                                    @deleteTask="deleteTask"
+                                    :key="'task-' + task.id"
                                     :task="task"></task>
                             </board-cell>
                         </tr>
@@ -103,6 +102,16 @@
                     this.stories = response.data.stories;
                     this.tasks = response.data.tasks;
                     this.states = response.data.states;
+                    this.setupWebsockets();
+                });
+            },
+            setupWebsockets() {
+                Echo.channel('board.' + this.sprint.id).listen('.task.updated', (e) => {
+                    this.updateTask(e.task);
+                }).listen('.task.created', (e) => {
+                    this.tasks.push(e.task);
+                }).listen('.task.deleted', (e) => {
+                    this.tasks = this.tasks.filter(t => t.id != e.task.id);
                 });
             },
             getTasksForState(story, state) {
@@ -129,9 +138,6 @@
                 this.stories = this.stories.filter(s => s.id != storyId);
                 this.tasks = this.tasks.filter(t => t.story_id != storyId);
             },
-            deleteTask(taskId) {
-                this.tasks = this.tasks.filter(t => t.id != taskId);
-            }
         },
         mounted() {
             this.fetchData();

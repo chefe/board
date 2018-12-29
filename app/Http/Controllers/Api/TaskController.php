@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Story;
 use App\Task;
 use App\TaskState;
+use App\Events\TaskCreated;
+use App\Events\TaskUpdated;
+use App\Events\TaskDeleted;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -24,11 +27,14 @@ class TaskController extends Controller
             'description' => 'nullable|string|min:3',
         ]);
 
-        return $story->tasks()->create([
+        $task = $story->tasks()->create([
             'caption' => $data['caption'],
             'description' => $data['description'],
             'state_id' => TaskState::first()->id
         ]);
+
+        broadcast(new TaskCreated($task));
+        return $task;
     }
 
     /** */
@@ -49,8 +55,10 @@ class TaskController extends Controller
         ]);
 
         $task->update($data);
+        $task = $task->fresh();
 
-        return $task->fresh();
+        broadcast(new TaskUpdated($task));
+        return $task;
     }
 
     /** */
@@ -58,6 +66,7 @@ class TaskController extends Controller
     {
         $this->authorize('delete', $task);
 
+        broadcast(new TaskDeleted($task));
         $task->delete();
     }
 }

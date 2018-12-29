@@ -47,7 +47,6 @@
             deleteTask(task) {
                 if (confirm('Are you sure?')) {
                     axios.delete('/api/task/' + task.id).then(request => {
-                        this.$emit('deleteTask', task.id);
                     });
                 }
             }

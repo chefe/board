@@ -17,7 +17,6 @@
                 let putData = { state_id: state.id };
 
                 axios.put(url, putData).then(response => {
-                    this.$emit('updateTask', response.data);
                 });
 
                 event.preventDefault();
