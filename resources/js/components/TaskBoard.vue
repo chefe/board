@@ -123,6 +123,12 @@
                     this.tasks.push(e.task);
                 }).listen('.task.deleted', (e) => {
                     this.tasks = this.tasks.filter(t => t.id != e.task.id);
+                }).listen('.story.updated', (e) => {
+                    this.updateStory(e.story);
+                }).listen('.story.created', (e) => {
+                    this.stories.push(e.story);
+                }).listen('.story.deleted', (e) => {
+                    this.deleteStory(e.story.id);
                 });
             },
             getTasksForState(story, state) {
@@ -143,6 +149,15 @@
                     }
 
                     return t;
+                });
+            },
+            updateStory(story) {
+                this.stories = this.stories.map(s => {
+                    if (s.id == story.id) {
+                        return story;
+                    }
+
+                    return s;
                 });
             },
             addNewStory() {

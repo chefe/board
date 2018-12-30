@@ -2721,6 +2721,12 @@ __webpack_require__.r(__webpack_exports__);
         _this2.tasks = _this2.tasks.filter(function (t) {
           return t.id != e.task.id;
         });
+      }).listen('.story.updated', function (e) {
+        _this2.updateStory(e.story);
+      }).listen('.story.created', function (e) {
+        _this2.stories.push(e.story);
+      }).listen('.story.deleted', function (e) {
+        _this2.deleteStory(e.story.id);
       });
     },
     getTasksForState: function getTasksForState(story, state) {
@@ -2741,6 +2747,15 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         return t;
+      });
+    },
+    updateStory: function updateStory(story) {
+      this.stories = this.stories.map(function (s) {
+        if (s.id == story.id) {
+          return story;
+        }
+
+        return s;
       });
     },
     addNewStory: function addNewStory() {

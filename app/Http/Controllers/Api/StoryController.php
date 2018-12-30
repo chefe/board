@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Story;
 use App\Sprint;
+use App\Events\StoryCreated;
+use App\Events\StoryUpdated;
+use App\Events\StoryDeleted;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -24,7 +27,10 @@ class StoryController extends Controller
             'points' => 'nullable|integer|min:0',
         ]);
 
-        return $sprint->stories()->create($data);
+        $story = $sprint->stories()->create($data);
+
+        broadcast(new StoryCreated($story));
+        return $story;
     }
 
     /** */
@@ -45,8 +51,10 @@ class StoryController extends Controller
         ]);
 
         $story->update($data);
+        $story = $story->fresh();
 
-        return $story->fresh();
+        broadcast(new StoryUpdated($story));
+        return $story;
     }
 
     /** */
@@ -54,6 +62,7 @@ class StoryController extends Controller
     {
         $this->authorize('delete', $story);
 
+        broadcast(new StoryDeleted($story));
         $story->delete();
     }
 }
