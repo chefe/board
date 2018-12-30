@@ -48,13 +48,15 @@
                                 v-for="state in states"
                                 :state="state"
                                 :story="story"
-                                :tasks="tasks"
+                                :dragging-task="draggingTask"
                                 :key="'cell' + story.id + '-' + state.id">
                                 <task
                                     v-for="task in getTasksForState(story, state)"
                                     :showTaskDescription="showTaskDescription"
                                     :key="'task-' + task.id"
-                                    :task="task"></task>
+                                    :task="task"
+                                    @begin-dragging="onBeginDragging"
+                                    @end-dragging="onEndDragging"></task>
                             </board-cell>
                         </tr>
                         <tr>
@@ -79,6 +81,7 @@
             return {
                 showTaskDescription: false,
                 fullscreenMode: false,
+                draggingTask: undefined,
                 sprint: {
                     caption: '',
                     start: '',
@@ -126,6 +129,12 @@
                 return this.tasks.filter(t => {
                     return t.story_id == story.id && t.state_id == state.id;
                 });
+            },
+            onBeginDragging(task) {
+                this.draggingTask = task;
+            },
+            onEndDragging() {
+                this.draggingTask = undefined;
             },
             updateTask(task) {
                 this.tasks = this.tasks.map(t => {

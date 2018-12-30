@@ -1773,11 +1773,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['state', 'story', 'tasks'],
+  props: ['state', 'story', 'tasks', 'draggingTask'],
   methods: {
     onDrop: function onDrop(event, state) {
-      var taskId = event.dataTransfer.getData('text');
-      var url = "/api/task/".concat(taskId);
+      if (!this.draggingTask) {
+        return;
+      }
+
+      var url = "/api/task/".concat(this.draggingTask.id);
       var putData = {
         state_id: state.id
       };
@@ -1785,12 +1788,9 @@ __webpack_require__.r(__webpack_exports__);
       event.preventDefault();
     },
     onDragOver: function onDragOver(event, state, story) {
-      var taskId = event.dataTransfer.getData('text');
-      var activeTask = this.tasks.filter(function (t) {
-        return t.id == taskId;
-      })[0];
+      var activeTask = this.draggingTask;
 
-      if (activeTask.state_id != state.id && activeTask.story_id == story.id) {
+      if (activeTask && activeTask.state_id != state.id && activeTask.story_id == story.id) {
         event.preventDefault();
       }
     }
@@ -2551,12 +2551,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['task', 'showTaskDescription'],
   methods: {
     onDragStart: function onDragStart(event, task) {
       event.dataTransfer.dropEffect = 'move';
       event.dataTransfer.setData('text/plain', task.id);
+      this.$emit('begin-dragging', task);
+    },
+    onDragEnd: function onDragEnd(event) {
+      this.$emit('end-dragging');
     },
     editTask: function editTask(task) {
       this.$router.push({
@@ -2660,11 +2665,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       showTaskDescription: false,
       fullscreenMode: false,
+      draggingTask: undefined,
       sprint: {
         caption: '',
         start: '',
@@ -2719,6 +2727,12 @@ __webpack_require__.r(__webpack_exports__);
       return this.tasks.filter(function (t) {
         return t.story_id == story.id && t.state_id == state.id;
       });
+    },
+    onBeginDragging: function onBeginDragging(task) {
+      this.draggingTask = task;
+    },
+    onEndDragging: function onEndDragging() {
+      this.draggingTask = undefined;
     },
     updateTask: function updateTask(task) {
       this.tasks = this.tasks.map(function (t) {
@@ -48882,6 +48896,9 @@ var render = function() {
       on: {
         dragstart: function($event) {
           _vm.onDragStart($event, _vm.task)
+        },
+        dragend: function($event) {
+          _vm.onDragEnd($event)
         }
       }
     },
@@ -49110,7 +49127,7 @@ var render = function() {
                             attrs: {
                               state: state,
                               story: story,
-                              tasks: _vm.tasks
+                              "dragging-task": _vm.draggingTask
                             }
                           },
                           _vm._l(_vm.getTasksForState(story, state), function(
@@ -49121,6 +49138,10 @@ var render = function() {
                               attrs: {
                                 showTaskDescription: _vm.showTaskDescription,
                                 task: task
+                              },
+                              on: {
+                                "begin-dragging": _vm.onBeginDragging,
+                                "end-dragging": _vm.onEndDragging
                               }
                             })
                           }),

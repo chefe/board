@@ -2,7 +2,8 @@
     <div
         class="card mb-2"
         :draggable="true"
-        @dragstart="onDragStart($event, task)">
+        @dragstart="onDragStart($event, task)"
+        @dragend="onDragEnd($event)">
 
         <div
             class="card-header d-flex p-2 align-items-center"
@@ -34,9 +35,13 @@
     export default {
         props: ['task', 'showTaskDescription'],
         methods: {
-            onDragStart: function(event, task) {
+            onDragStart(event, task) {
                 event.dataTransfer.dropEffect = 'move';
                 event.dataTransfer.setData('text/plain', task.id);
+                this.$emit('begin-dragging', task);
+            },
+            onDragEnd(event) {
+                this.$emit('end-dragging');
             },
             editTask(task) {
                 this.$router.push({
