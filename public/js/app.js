@@ -2734,6 +2734,11 @@ __webpack_require__.r(__webpack_exports__);
         return t.story_id == story.id && t.state_id == state.id;
       });
     },
+    getTaskCountForState: function getTaskCountForState(state) {
+      return this.tasks.filter(function (t) {
+        return t.state_id == state.id;
+      }).length;
+    },
     onBeginDragging: function onBeginDragging(task) {
       this.draggingTask = task;
     },
@@ -49104,12 +49109,16 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _vm._l(_vm.states, function(state) {
-                    return _c("th", {
-                      attrs: { width: _vm.tableColWidth },
-                      domProps: {
-                        textContent: _vm._s(state.caption.toUpperCase())
-                      }
-                    })
+                    return _c("th", { attrs: { width: _vm.tableColWidth } }, [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(state.caption.toUpperCase()) +
+                          "\n                            "
+                      ),
+                      _c("span", { staticClass: "badge badge-secondary" }, [
+                        _vm._v(_vm._s(_vm.getTaskCountForState(state)))
+                      ])
+                    ])
                   })
                 ],
                 2

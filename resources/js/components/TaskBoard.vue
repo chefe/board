@@ -33,10 +33,10 @@
                     <thead>
                         <tr>
                             <th :width="tableColWidth">STORIES</th>
-                            <th
-                                v-for="state in states"
-                                :width="tableColWidth"
-                                v-text="state.caption.toUpperCase()"></th>
+                            <th v-for="state in states" :width="tableColWidth">
+                                {{ state.caption.toUpperCase() }}
+                                <span class="badge badge-secondary">{{ getTaskCountForState(state) }}</span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -135,6 +135,11 @@
                 return this.tasks.filter(t => {
                     return t.story_id == story.id && t.state_id == state.id;
                 });
+            },
+            getTaskCountForState(state) {
+                return this.tasks.filter(t => {
+                    return t.state_id == state.id;
+                }).length;
             },
             onBeginDragging(task) {
                 this.draggingTask = task;
