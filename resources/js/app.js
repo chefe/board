@@ -58,6 +58,10 @@ const routes = [
         path: '/task/:taskId/edit',
         name: 'task.edit',
         component: require('./components/EditTask.vue').default
+    }, {
+        path: '/activity',
+        name: 'activity.index',
+        component: require('./components/ActivityOverview.vue').default
     },
 ]
 

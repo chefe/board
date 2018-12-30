@@ -27,5 +27,7 @@ Route::get('/api/sprint/{sprint}/board', 'Api\BoardController@show')->name('boar
 Route::resource('/api/story/{story}/task', 'Api\TaskController')->only(['index', 'store']);
 Route::resource('/api/task', 'Api\TaskController')->only(['update', 'destroy', 'show']);
 
+Route::get('/api/activity', 'Api\ActivityController@index')->name('activity.index');
+
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/{catchall?}', 'HomeController@index')->where('catchall', '^(?!api).*$');
