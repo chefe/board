@@ -68,6 +68,10 @@
         },
         methods: {
             goToPage(p) {
+                if (p < 1 || (this.pagination && p > this.pagination.last_page)) {
+                    return;
+                }
+
                 let url = `/api/activity?page=${p}`;
 
                 axios.get(url).then(response => {

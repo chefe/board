@@ -1834,6 +1834,10 @@ __webpack_require__.r(__webpack_exports__);
     goToPage: function goToPage(p) {
       var _this = this;
 
+      if (p < 1 || this.pagination && p > this.pagination.last_page) {
+        return;
+      }
+
       var url = "/api/activity?page=".concat(p);
       axios.get(url).then(function (response) {
         _this.pagination = response.data;
