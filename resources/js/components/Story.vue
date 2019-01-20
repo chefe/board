@@ -5,12 +5,12 @@
                 <strong>{{ story.caption }}</strong>
                 <span class="badge badge-secondary">{{ story.points }}</span>
             </div>
-            <button class="btn btn-sm btn-light" @click="editStory(story)">
+            <button class="btn btn-sm btn-light" @click="editStory(story)" v-if="editMode">
                 <svg class="icon" viewBox="0 0 20 20">
                     <path fill="currentColor" d="M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"/>
                 </svg>
             </button>
-            <button class="btn btn-sm btn-light" @click="deleteStory(story)">
+            <button class="btn btn-sm btn-light" @click="deleteStory(story)" v-if="editMode">
                 <svg class="icon" viewBox="0 0 20 20">
                     <path fill="currentColor" d="M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"/>
                 </svg>
@@ -28,7 +28,7 @@
 
 <script>
     export default {
-        props: ['story'],
+        props: ['story', 'editMode'],
         methods: {
             addNewTask(story) {
                 this.$router.push({

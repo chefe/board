@@ -24,6 +24,10 @@
                         class="btn btn-outline-dark"
                         @click="fullscreenMode = !fullscreenMode"
                         :class="{ 'active': fullscreenMode }">Fullscreen Mode</button>
+                    <button
+                        class="btn btn-outline-dark"
+                        @click="editMode = !editMode"
+                        :class="{ 'active': editMode }">Edit Mode</button>
                 </div>
             </div>
         </div>
@@ -42,7 +46,10 @@
                     <tbody>
                         <tr v-for="story in stories">
                             <td>
-                                <story :story="story" @deleteStory="deleteStory"></story>
+                                <story
+                                    :story="story"
+                                    :editMode="editMode"
+                                    @deleteStory="deleteStory"></story>
                             </td>
                             <board-cell
                                 v-for="state in states"
@@ -53,13 +60,14 @@
                                 <task
                                     v-for="task in getTasksForState(story, state)"
                                     :showTaskDescription="showTaskDescription"
+                                    :editMode="editMode"
                                     :key="'task-' + task.id"
                                     :task="task"
                                     @begin-dragging="onBeginDragging"
                                     @end-dragging="onEndDragging"></task>
                             </board-cell>
                         </tr>
-                        <tr>
+                        <tr v-if="editMode">
                             <td :colspan="states.length + 1" class="p-0 pt-1">
                                 <button
                                     @click="addNewStory"
@@ -81,6 +89,7 @@
             return {
                 showTaskDescription: false,
                 fullscreenMode: false,
+                editMode: false,
                 draggingTask: undefined,
                 sprint: {
                     caption: '',

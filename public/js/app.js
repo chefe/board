@@ -2585,7 +2585,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['story'],
+  props: ['story', 'editMode'],
   methods: {
     addNewTask: function addNewTask(story) {
       this.$router.push({
@@ -2660,7 +2660,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['task', 'showTaskDescription'],
+  props: ['task', 'showTaskDescription', 'editMode'],
   methods: {
     onDragStart: function onDragStart(event, task) {
       event.dataTransfer.dropEffect = 'move';
@@ -2774,11 +2774,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       showTaskDescription: false,
       fullscreenMode: false,
+      editMode: false,
       draggingTask: undefined,
       sprint: {
         caption: '',
@@ -49071,51 +49080,63 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-sm btn-light",
-          on: {
-            click: function($event) {
-              _vm.editStory(_vm.story)
-            }
-          }
-        },
-        [
-          _c("svg", { staticClass: "icon", attrs: { viewBox: "0 0 20 20" } }, [
-            _c("path", {
-              attrs: {
-                fill: "currentColor",
-                d:
-                  "M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"
+      _vm.editMode
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-light",
+              on: {
+                click: function($event) {
+                  _vm.editStory(_vm.story)
+                }
               }
-            })
-          ])
-        ]
-      ),
+            },
+            [
+              _c(
+                "svg",
+                { staticClass: "icon", attrs: { viewBox: "0 0 20 20" } },
+                [
+                  _c("path", {
+                    attrs: {
+                      fill: "currentColor",
+                      d:
+                        "M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"
+                    }
+                  })
+                ]
+              )
+            ]
+          )
+        : _vm._e(),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-sm btn-light",
-          on: {
-            click: function($event) {
-              _vm.deleteStory(_vm.story)
-            }
-          }
-        },
-        [
-          _c("svg", { staticClass: "icon", attrs: { viewBox: "0 0 20 20" } }, [
-            _c("path", {
-              attrs: {
-                fill: "currentColor",
-                d:
-                  "M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"
+      _vm.editMode
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-light",
+              on: {
+                click: function($event) {
+                  _vm.deleteStory(_vm.story)
+                }
               }
-            })
-          ])
-        ]
-      )
+            },
+            [
+              _c(
+                "svg",
+                { staticClass: "icon", attrs: { viewBox: "0 0 20 20" } },
+                [
+                  _c("path", {
+                    attrs: {
+                      fill: "currentColor",
+                      d:
+                        "M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"
+                    }
+                  })
+                ]
+              )
+            ]
+          )
+        : _vm._e()
     ]),
     _vm._v(" "),
     _c("p", { domProps: { textContent: _vm._s(_vm.story.description) } }),
@@ -49186,59 +49207,63 @@ var render = function() {
             domProps: { textContent: _vm._s(_vm.task.caption) }
           }),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-sm btn-light",
-              on: {
-                click: function($event) {
-                  _vm.editTask(_vm.task)
-                }
-              }
-            },
-            [
-              _c(
-                "svg",
-                { staticClass: "icon", attrs: { viewBox: "0 0 20 20" } },
-                [
-                  _c("path", {
-                    attrs: {
-                      fill: "currentColor",
-                      d:
-                        "M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"
+          _vm.editMode
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-light",
+                  on: {
+                    click: function($event) {
+                      _vm.editTask(_vm.task)
                     }
-                  })
+                  }
+                },
+                [
+                  _c(
+                    "svg",
+                    { staticClass: "icon", attrs: { viewBox: "0 0 20 20" } },
+                    [
+                      _c("path", {
+                        attrs: {
+                          fill: "currentColor",
+                          d:
+                            "M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"
+                        }
+                      })
+                    ]
+                  )
                 ]
               )
-            ]
-          ),
+            : _vm._e(),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-sm btn-light",
-              on: {
-                click: function($event) {
-                  _vm.deleteTask(_vm.task)
-                }
-              }
-            },
-            [
-              _c(
-                "svg",
-                { staticClass: "icon", attrs: { viewBox: "0 0 20 20" } },
-                [
-                  _c("path", {
-                    attrs: {
-                      fill: "currentColor",
-                      d:
-                        "M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"
+          _vm.editMode
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-light",
+                  on: {
+                    click: function($event) {
+                      _vm.deleteTask(_vm.task)
                     }
-                  })
+                  }
+                },
+                [
+                  _c(
+                    "svg",
+                    { staticClass: "icon", attrs: { viewBox: "0 0 20 20" } },
+                    [
+                      _c("path", {
+                        attrs: {
+                          fill: "currentColor",
+                          d:
+                            "M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"
+                        }
+                      })
+                    ]
+                  )
                 ]
               )
-            ]
-          )
+            : _vm._e()
         ]
       ),
       _vm._v(" "),
@@ -49341,6 +49366,20 @@ var render = function() {
                 }
               },
               [_vm._v("Fullscreen Mode")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-dark",
+                class: { active: _vm.editMode },
+                on: {
+                  click: function($event) {
+                    _vm.editMode = !_vm.editMode
+                  }
+                }
+              },
+              [_vm._v("Edit Mode")]
             )
           ])
         ])
@@ -49385,7 +49424,7 @@ var render = function() {
                         "td",
                         [
                           _c("story", {
-                            attrs: { story: story },
+                            attrs: { story: story, editMode: _vm.editMode },
                             on: { deleteStory: _vm.deleteStory }
                           })
                         ],
@@ -49410,6 +49449,7 @@ var render = function() {
                               key: "task-" + task.id,
                               attrs: {
                                 showTaskDescription: _vm.showTaskDescription,
+                                editMode: _vm.editMode,
                                 task: task
                               },
                               on: {
@@ -49426,30 +49466,32 @@ var render = function() {
                   )
                 }),
                 _vm._v(" "),
-                _c("tr", [
-                  _c(
-                    "td",
-                    {
-                      staticClass: "p-0 pt-1",
-                      attrs: { colspan: _vm.states.length + 1 }
-                    },
-                    [
+                _vm.editMode
+                  ? _c("tr", [
                       _c(
-                        "button",
+                        "td",
                         {
-                          staticClass:
-                            "btn btn-block btn-light p-3 text-muted rounded-0 border border-dashed",
-                          on: { click: _vm.addNewStory }
+                          staticClass: "p-0 pt-1",
+                          attrs: { colspan: _vm.states.length + 1 }
                         },
                         [
-                          _vm._v(
-                            "\n                                Add a new story\n                            "
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-block btn-light p-3 text-muted rounded-0 border border-dashed",
+                              on: { click: _vm.addNewStory }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                Add a new story\n                            "
+                              )
+                            ]
                           )
                         ]
                       )
-                    ]
-                  )
-                ])
+                    ])
+                  : _vm._e()
               ],
               2
             )
