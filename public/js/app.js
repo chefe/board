@@ -2584,6 +2584,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['story', 'editMode'],
   methods: {
@@ -49166,19 +49167,21 @@ var render = function() {
     _vm._v(" "),
     _c("p", { domProps: { textContent: _vm._s(_vm.story.description) } }),
     _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass:
-          "btn btn-block btn-light text-muted rounded-0 border border-dashed",
-        on: {
-          click: function($event) {
-            _vm.addNewTask(_vm.story)
-          }
-        }
-      },
-      [_vm._v("\n        Add a new task\n    ")]
-    )
+    _vm.editMode
+      ? _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-block btn-light text-muted rounded-0 border border-dashed",
+            on: {
+              click: function($event) {
+                _vm.addNewTask(_vm.story)
+              }
+            }
+          },
+          [_vm._v("\n        Add a new task\n    ")]
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = []

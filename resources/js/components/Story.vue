@@ -19,6 +19,7 @@
         <p v-text="story.description"></p>
 
         <button
+            v-if="editMode"
             @click="addNewTask(story)"
             class="btn btn-block btn-light text-muted rounded-0 border border-dashed">
             Add a new task
