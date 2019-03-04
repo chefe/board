@@ -18,8 +18,8 @@
                 <div class="btn-group">
                     <button
                         class="btn btn-outline-dark"
-                        @click="showTaskDescription = !showTaskDescription"
-                        :class="{ 'active': showTaskDescription}">Show Details</button>
+                        @click="detailMode = !detailMode"
+                        :class="{ 'active': detailMode}">Show Details</button>
                     <button
                         class="btn btn-outline-dark"
                         @click="fullscreenMode = !fullscreenMode"
@@ -59,7 +59,7 @@
                                 :key="'cell' + story.id + '-' + state.id">
                                 <task
                                     v-for="task in getTasksForState(story, state)"
-                                    :showTaskDescription="showTaskDescription"
+                                    :showTaskDescription="detailMode"
                                     :editMode="editMode"
                                     :key="'task-' + task.id"
                                     :task="task"
@@ -87,7 +87,7 @@
     export default {
         data() {
             return {
-                showTaskDescription: false,
+                detailMode: false,
                 fullscreenMode: false,
                 editMode: false,
                 draggingTask: undefined,
@@ -105,6 +105,17 @@
                 tasks: []
             }
         },
+        watch: {
+            detailMode: function (newMode, oldMode) {
+                localStorage.detailMode = newMode;
+            },
+            fullscreenMode: function (newMode, oldMode) {
+                localStorage.fullscreenMode = newMode;
+            },
+            editMode: function (newMode, oldMode) {
+                localStorage.editMode = newMode;
+            },
+        },
         computed: {
             tableColWidth() {
                 return 1 / (this.states.length + 1) * 100 + '%';
@@ -114,6 +125,17 @@
             }
         },
         methods: {
+            loadSettings() {
+                if (localStorage.detailMode != undefined) {
+                    this.detailMode = (localStorage.detailMode == "true");
+                }
+                if (localStorage.fullscreenMode != undefined) {
+                    this.fullscreenMode = (localStorage.fullscreenMode == "true");
+                }
+                if (localStorage.editMode != undefined) {
+                    this.editMode = (localStorage.editMode == "true");
+                }
+            },
             fetchData() {
                 let url = `/api/sprint/${this.$route.params.sprintId}/board`;
                 axios.get(url).then(response => {
@@ -186,6 +208,7 @@
             },
         },
         mounted() {
+            this.loadSettings();
             this.fetchData();
         }
     }

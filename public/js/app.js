@@ -2785,7 +2785,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      showTaskDescription: false,
+      detailMode: false,
       fullscreenMode: false,
       editMode: false,
       draggingTask: undefined,
@@ -2803,6 +2803,17 @@ __webpack_require__.r(__webpack_exports__);
       tasks: []
     };
   },
+  watch: {
+    detailMode: function detailMode(newMode, oldMode) {
+      localStorage.detailMode = newMode;
+    },
+    fullscreenMode: function fullscreenMode(newMode, oldMode) {
+      localStorage.fullscreenMode = newMode;
+    },
+    editMode: function editMode(newMode, oldMode) {
+      localStorage.editMode = newMode;
+    }
+  },
   computed: {
     tableColWidth: function tableColWidth() {
       return 1 / (this.states.length + 1) * 100 + '%';
@@ -2812,6 +2823,19 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    loadSettings: function loadSettings() {
+      if (localStorage.detailMode != undefined) {
+        this.detailMode = localStorage.detailMode == "true";
+      }
+
+      if (localStorage.fullscreenMode != undefined) {
+        this.fullscreenMode = localStorage.fullscreenMode == "true";
+      }
+
+      if (localStorage.editMode != undefined) {
+        this.editMode = localStorage.editMode == "true";
+      }
+    },
     fetchData: function fetchData() {
       var _this = this;
 
@@ -2897,6 +2921,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    this.loadSettings();
     this.fetchData();
   }
 });
@@ -49344,10 +49369,10 @@ var render = function() {
               "button",
               {
                 staticClass: "btn btn-outline-dark",
-                class: { active: _vm.showTaskDescription },
+                class: { active: _vm.detailMode },
                 on: {
                   click: function($event) {
-                    _vm.showTaskDescription = !_vm.showTaskDescription
+                    _vm.detailMode = !_vm.detailMode
                   }
                 }
               },
@@ -49448,7 +49473,7 @@ var render = function() {
                             return _c("task", {
                               key: "task-" + task.id,
                               attrs: {
-                                showTaskDescription: _vm.showTaskDescription,
+                                showTaskDescription: _vm.detailMode,
                                 editMode: _vm.editMode,
                                 task: task
                               },
