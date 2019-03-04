@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="d-flex">
-            <div class="flex-grow-1">
+            <div class="flex-grow-1 py-1">
                 <strong>{{ story.caption }}</strong>
                 <span class="badge badge-secondary">{{ story.points }}</span>
             </div>

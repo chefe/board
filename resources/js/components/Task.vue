@@ -8,7 +8,7 @@
         <div
             class="card-header d-flex p-2 align-items-center"
             :class="{ 'border-bottom-0': !showTaskDescription || !task.description }">
-            <h5 class="mb-0 flex-grow-1" v-text="task.caption"></h5>
+            <h5 class="mb-0 flex-grow-1 py-1" v-text="task.caption"></h5>
             <button class="btn btn-sm btn-light" @click="editTask(task)" v-if="editMode">
                 <svg class="icon" viewBox="0 0 20 20">
                     <path fill="currentColor" d="M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"/>

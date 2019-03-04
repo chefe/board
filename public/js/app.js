@@ -49072,7 +49072,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "d-flex" }, [
-      _c("div", { staticClass: "flex-grow-1" }, [
+      _c("div", { staticClass: "flex-grow-1 py-1" }, [
         _c("strong", [_vm._v(_vm._s(_vm.story.caption))]),
         _vm._v(" "),
         _c("span", { staticClass: "badge badge-secondary" }, [
@@ -49203,7 +49203,7 @@ var render = function() {
         },
         [
           _c("h5", {
-            staticClass: "mb-0 flex-grow-1",
+            staticClass: "mb-0 flex-grow-1 py-1",
             domProps: { textContent: _vm._s(_vm.task.caption) }
           }),
           _vm._v(" "),
