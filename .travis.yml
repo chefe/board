@@ -4,6 +4,10 @@ php:
   - 7.2
   - 7.3
 
+addons:
+  sonarcloud:
+    organization: "chefe-github"
+
 before_script:
   - cp .env.travis .env
   - composer install --no-interaction
@@ -11,7 +15,9 @@ before_script:
 
 script:
   - vendor/bin/phpunit
+  - sonar-scanner
 
 cache:
   directories:
     - vendor
+    - '$HOME/.sonar/cache'
