@@ -12,12 +12,16 @@ class SprintController extends Controller
     /** */
     public function index(Team $team)
     {
+        $this->authorize('show', $team);
+
         return $team->sprints;
     }
 
     /** */
     public function store(Request $request, Team $team)
     {
+        $this->authorize('edit', $team);
+
         $data = $request->validate([
             'caption' => 'required|string|min:3',
             'start' => 'required|date',
@@ -30,6 +34,8 @@ class SprintController extends Controller
     /** */
     public function show(Sprint $sprint)
     {
+        $this->authorize('edit', $sprint);
+
         return $sprint;
     }
 

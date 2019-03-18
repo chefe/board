@@ -11,6 +11,12 @@ class TeamPolicy
     use HandlesAuthorization;
 
     /** */
+    public function show(User $user, Team $team)
+    {
+        return $team->user_id == $user->id;
+    }
+
+    /** */
     public function edit(User $user, Team $team)
     {
         return $team->user_id == $user->id;
