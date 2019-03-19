@@ -15,12 +15,16 @@ class StoryController extends Controller
     /** */
     public function index(Sprint $sprint)
     {
+        $this->authorize('view', $sprint);
+
         return $sprint->stories;
     }
 
     /** */
     public function store(Request $request, Sprint $sprint)
     {
+        $this->authorize('edit', $sprint);
+
         $data = $request->validate([
             'caption' => 'required|string|min:3',
             'description' => 'nullable|string',
@@ -36,6 +40,8 @@ class StoryController extends Controller
     /** */
     public function show(Story $story)
     {
+        $this->authorize('view', $story);
+
         return $story;
     }
 

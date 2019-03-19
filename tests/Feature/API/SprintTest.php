@@ -27,7 +27,6 @@ class SprintTest extends TestCase
         ]);
     }
 
-
     /** @test */
     public function a_user_can_get_the_sprints_of_his_teams()
     {
