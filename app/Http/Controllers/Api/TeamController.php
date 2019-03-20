@@ -31,6 +31,8 @@ class TeamController extends Controller
     /** */
     public function show(Team $team)
     {
+        $this->authorize('show', $team);
+        
         return $team;
     }
 

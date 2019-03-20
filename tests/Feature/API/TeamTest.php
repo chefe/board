@@ -108,6 +108,36 @@ class TeamTest extends TestCase
     }
 
     /** @test */
+    public function a_user_can_get_the_details_about_his_team()
+    {
+        $user = factory(User::class)->create();
+        $ownTeam = factory(Team::class)->create([
+            'caption' => 'Own Team',
+            'user_id' => $user->id
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('team.show', $ownTeam))
+            ->assertStatus(200)
+            ->assertJson([
+                'caption' => 'Own Team'
+            ]);
+    }
+
+    /** @test */
+    public function a_user_can_not_get_the_details_about_a_foreign_team()
+    {
+        $user = factory(User::class)->create();
+        $otherTeam = factory(Team::class)->create([
+            'caption' => 'Own Team',
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('team.show', $otherTeam))
+            ->assertStatus(403);
+    }
+
+    /** @test */
     public function a_user_can_delete_his_teams()
     {
         $user = factory(User::class)->create();
