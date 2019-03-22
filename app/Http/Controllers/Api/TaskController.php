@@ -16,12 +16,16 @@ class TaskController extends Controller
     /** */
     public function index(Story $story)
     {
+        $this->authorize('view', $story);
+
         return $story->tasks;
     }
 
     /** */
     public function store(Request $request, Story $story)
     {
+        $this->authorize('edit', $story);
+
         $data = $request->validate([
             'caption' => 'required|string|min:3',
             'description' => 'nullable|string|min:3',
@@ -40,6 +44,8 @@ class TaskController extends Controller
     /** */
     public function show(Task $task)
     {
+        $this->authorize('view', $task);
+
         return $task;
     }
 

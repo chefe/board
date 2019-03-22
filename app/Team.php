@@ -14,4 +14,10 @@ class Team extends Model
     {
         return $this->hasMany(Sprint::class);
     }
+
+    /** */
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
