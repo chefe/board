@@ -12,39 +12,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Broadcast;
 use App\Events\StoryCreated;
 use App\Events\StoryUpdated;
+use Tests\InteractWithBroadcasting;
 
 class StoryTest extends TestCase
 {
-    use RefreshDatabase;
-
-    /** */
-    protected function expectStoryEventBroadcast($class)
-    {
-        Broadcast::spy()
-            ->shouldReceive('event')
-            ->once()
-            ->withArgs(function ($e) use ($class) {
-                return (get_class($e) == $class);
-            });
-    }
-
-    /** */
-    protected function expectStoryEventBroadcastWithId($class, $storyId)
-    {
-        Broadcast::spy()
-            ->shouldReceive('event')
-            ->once()
-            ->withArgs(function ($e) use ($class, $storyId) {
-                return (get_class($e) == $class) &&
-                    ($e->story->id == $storyId);
-            });
-    }
-
-    /** */
-    protected function expectNoStoryEventBroadcast()
-    {
-        Broadcast::spy()->shouldReceive('event')->never();
-    }
+    use RefreshDatabase, InteractWithBroadcasting;
 
     /** */
     public function setUp(): void
@@ -130,7 +102,7 @@ class StoryTest extends TestCase
             'points' => 10
         ];
 
-        $this->expectStoryEventBroadcast(StoryCreated::class);
+        $this->expectBroadcast(StoryCreated::class);
 
         $this->assertDatabaseMissing('stories', [
             'caption' => 'A new story',
@@ -161,7 +133,7 @@ class StoryTest extends TestCase
             'points' => 10
         ];
 
-        $this->expectNoStoryEventBroadcast();
+        $this->expectNoBroadcast();
 
         $this->assertDatabaseMissing('stories', [
             'caption' => 'A new story',
@@ -183,7 +155,7 @@ class StoryTest extends TestCase
             'caption' => 'A new story',
         ];
 
-        $this->expectStoryEventBroadcast(StoryCreated::class);
+        $this->expectBroadcast(StoryCreated::class);
 
         $this->assertDatabaseMissing('stories', [
             'caption' => 'A new story',
@@ -241,7 +213,7 @@ class StoryTest extends TestCase
             'caption' => 'Story Updated'
         ];
 
-        $this->expectStoryEventBroadcastWithId(StoryUpdated::class, $story->id);
+        $this->expectBroadcastWithId(StoryUpdated::class, $story->id, 'story');
 
         $this->assertDatabaseHas('stories', [
             'id' => $story->id,
@@ -272,7 +244,7 @@ class StoryTest extends TestCase
             'caption' => 'Story Updated'
         ];
 
-        $this->expectNoStoryEventBroadcast();
+        $this->expectNoBroadcast();
 
         $this->assertDatabaseHas('stories', [
             'id' => $story->id,
@@ -297,7 +269,7 @@ class StoryTest extends TestCase
             'sprint_id' => $this->sprint->id
         ]);
 
-        $this->expectStoryEventBroadcastWithId(StoryDeleted::class, $story->id);
+        $this->expectBroadcastWithId(StoryDeleted::class, $story->id, 'story');
 
         $this->assertDatabaseHas('stories', [
             'caption' => 'Story2Delete',
@@ -319,7 +291,7 @@ class StoryTest extends TestCase
             'caption' => 'Story2Delete',
         ]);
 
-        $this->expectNoStoryEventBroadcast();
+        $this->expectNoBroadcast();
 
         $this->assertDatabaseHas('stories', [
             'caption' => 'Story2Delete',
