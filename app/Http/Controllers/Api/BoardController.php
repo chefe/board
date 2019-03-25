@@ -12,6 +12,8 @@ class BoardController extends Controller
     /** */
     public function show(Sprint $sprint)
     {
+        $this->authorize('view', $sprint);
+
         return [
             'states' => TaskState::get(),
             'sprint' => $sprint->toArray(),
