@@ -12,6 +12,7 @@ use App\Story;
 use App\Task;
 use DatabaseSeeder;
 use TaskStateSeeder;
+use App\TaskState;
 
 class BoardTest extends TestCase
 {
@@ -37,6 +38,7 @@ class BoardTest extends TestCase
         $this->actingAs($user)
             ->get(route('board.index', $sprint))
             ->assertStatus(200)
+            ->assertJsonCount(TaskState::count(), 'states')
             ->assertJson([
                 'sprint' => [
                     'caption' => $sprint->caption
