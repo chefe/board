@@ -16,9 +16,9 @@ class ActivityController extends Controller
             $changes = $activity['properties']->toArray();
 
             if (array_key_exists('attributes', $changes)) {
-                $keys = array_keys($changes['attributes']);
+                $keys = collect(array_keys($changes['attributes']));
 
-                $changes = collect($keys)->filter(function ($key) use ($changes) {
+                $changes = $keys->filter(function ($key) use ($changes) {
                     return array_key_exists('old', $changes);
                 })->reject(function ($key) use ($changes) {
                     return $changes['attributes'][$key] == $changes['old'][$key];
