@@ -1,5 +1,5 @@
 <template>
-    <center-card>
+    <center-card class="mb-4">
         <template slot="header">Edit story</template>
 
         <div class="form-group">
@@ -31,6 +31,20 @@
                 v-model="story.points"
                 id="pointsInput">
         </div>
+        <div class="form-group" v-if="sprints.length > 1">
+            <label for="sprintSelect">Sprint</label>
+            <select
+                id="sprintSelect"
+                class="form-control"
+                v-model="story.sprint_id">
+                <option
+                    v-for="sprint in sprints"
+                    :key="sprint.id"
+                    :value="sprint.id">
+                    {{ sprint.caption }}
+                </option>
+            </select>
+        </div>
         <button
             @click="save"
             class="btn btn-primary">Save</button>
@@ -49,7 +63,8 @@
                     description: '',
                     points: '',
                     sprint_id: -1
-                }
+                },
+                sprints: [],
             }
         },
         methods: {
@@ -57,6 +72,13 @@
                 let url = `/api/story/${this.$route.params.storyId}`;
                 axios.get(url).then(response => {
                     this.story = response.data;
+                    this.fetchStories(this.story.sprint.team_id);
+                });
+            },
+            fetchStories(teamId) {
+                let url = `/api/team/${teamId}/sprint`;
+                axios.get(url).then(response => {
+                    this.sprints = response.data;
                 });
             },
             save() {
@@ -65,6 +87,7 @@
                     caption: this.story.caption,
                     description: this.story.description,
                     points: this.story.points,
+                    sprint_id: this.story.sprint_id,
                 };
 
                 axios.put(url, putData).then(response => {

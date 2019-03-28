@@ -9,6 +9,7 @@ use App\Events\StoryUpdated;
 use App\Events\StoryDeleted;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 
 class StoryController extends Controller
 {
@@ -50,10 +51,19 @@ class StoryController extends Controller
     {
         $this->authorize('edit', $story);
 
+        $sprintIdRule = Rule::in(
+            $story
+                ->sprint
+                ->team
+                ->sprints()
+                ->pluck('id')
+        );
+
         $data = $request->validate([
             'caption' => 'required|string|min:3',
             'description' => 'nullable|string',
             'points' => 'nullable|integer|min:0',
+            'sprint_id' => ['integer', $sprintIdRule]
         ]);
 
         $story->update($data);

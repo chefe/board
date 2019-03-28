@@ -2156,6 +2156,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2164,7 +2178,8 @@ __webpack_require__.r(__webpack_exports__);
         description: '',
         points: '',
         sprint_id: -1
-      }
+      },
+      sprints: []
     };
   },
   methods: {
@@ -2174,19 +2189,30 @@ __webpack_require__.r(__webpack_exports__);
       var url = "/api/story/".concat(this.$route.params.storyId);
       axios.get(url).then(function (response) {
         _this.story = response.data;
+
+        _this.fetchStories(_this.story.sprint.team_id);
+      });
+    },
+    fetchStories: function fetchStories(teamId) {
+      var _this2 = this;
+
+      var url = "/api/team/".concat(teamId, "/sprint");
+      axios.get(url).then(function (response) {
+        _this2.sprints = response.data;
       });
     },
     save: function save() {
-      var _this2 = this;
+      var _this3 = this;
 
       var url = "/api/story/".concat(this.$route.params.storyId);
       var putData = {
         caption: this.story.caption,
         description: this.story.description,
-        points: this.story.points
+        points: this.story.points,
+        sprint_id: this.story.sprint_id
       };
       axios.put(url, putData).then(function (response) {
-        _this2.goToBoard();
+        _this3.goToBoard();
       });
     },
     goToBoard: function goToBoard() {
@@ -48747,6 +48773,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "center-card",
+    { staticClass: "mb-4" },
     [
       _c("template", { slot: "header" }, [_vm._v("Edit story")]),
       _vm._v(" "),
@@ -48843,6 +48870,59 @@ var render = function() {
           }
         })
       ]),
+      _vm._v(" "),
+      _vm.sprints.length > 1
+        ? _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "sprintSelect" } }, [_vm._v("Sprint")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.story.sprint_id,
+                    expression: "story.sprint_id"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { id: "sprintSelect" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.story,
+                      "sprint_id",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              _vm._l(_vm.sprints, function(sprint) {
+                return _c(
+                  "option",
+                  { key: sprint.id, domProps: { value: sprint.id } },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(sprint.caption) +
+                        "\n            "
+                    )
+                  ]
+                )
+              }),
+              0
+            )
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "button",

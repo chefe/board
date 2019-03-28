@@ -262,6 +262,70 @@ class StoryTest extends TestCase
     }
 
     /** @test */
+    public function a_user_can_move_a_story_to_a_new_sprint()
+    {
+        $story = factory(Story::class)->create([
+            'sprint_id' => $this->sprint->id
+        ]);
+
+        $newSprint = factory(Sprint::class)->create([
+            'team_id' => $this->team->id
+        ]);
+
+        $this->assertDatabaseHas('stories', [
+            'id' => $story->id,
+            'sprint_id' => $this->sprint->id
+        ]);
+
+        $validStoryData = [
+            'caption' => $story->caption,
+            'sprint_id' => $newSprint->id
+        ];
+
+        $this->actingAs($this->user)
+            ->putJson(route('story.update', $story), $validStoryData)
+            ->assertStatus(200)
+            ->assertJson([
+                'sprint_id' => $newSprint->id
+            ]);
+
+        $this->assertDatabaseHas('stories', [
+            'id' => $story->id,
+            'sprint_id' => $newSprint->id
+        ]);
+    }
+
+    /** @test */
+    public function a_user_can_not_move_a_story_to_a_foreign_sprint()
+    {
+        $story = factory(Story::class)->create([
+            'sprint_id' => $this->sprint->id
+        ]);
+
+        $newSprint = factory(Sprint::class)->create();
+
+        $this->assertDatabaseHas('stories', [
+            'id' => $story->id,
+            'sprint_id' => $this->sprint->id
+        ]);
+
+        $storyData = [
+            'caption' => $story->caption,
+            'sprint_id' => $newSprint->id
+        ];
+
+        $this->actingAs($this->user)
+            ->putJson(route('story.update', $story), $storyData)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('sprint_id');
+
+        $this->assertDatabaseHas('stories', [
+            'id' => $story->id,
+            'sprint_id' => $this->sprint->id
+        ]);
+    }
+
+    /** @test */
     public function a_user_can_delete_a_story()
     {
         $story = factory(Story::class)->create([
