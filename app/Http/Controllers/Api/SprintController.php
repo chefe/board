@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 
 class SprintController extends Controller
 {
-    /** */
     public function index(Team $team)
     {
         $this->authorize('show', $team);
@@ -17,7 +16,6 @@ class SprintController extends Controller
         return $team->sprints;
     }
 
-    /** */
     public function store(Request $request, Team $team)
     {
         $this->authorize('edit', $team);
@@ -31,7 +29,6 @@ class SprintController extends Controller
         return $team->sprints()->create($data);
     }
 
-    /** */
     public function show(Sprint $sprint)
     {
         $this->authorize('edit', $sprint);
@@ -39,7 +36,6 @@ class SprintController extends Controller
         return $sprint;
     }
 
-    /** */
     public function update(Request $request, Sprint $sprint)
     {
         $this->authorize('edit', $sprint);
@@ -55,7 +51,6 @@ class SprintController extends Controller
         return $sprint->fresh();
     }
 
-    /** */
     public function destroy(Sprint $sprint)
     {
         $this->authorize('delete', $sprint);

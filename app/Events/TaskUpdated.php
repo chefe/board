@@ -11,24 +11,20 @@ class TaskUpdated implements ShouldBroadcast
 {
     use SerializesModels;
 
-    /** */
     public $task;
 
-    /** */
     public function __construct(Task $task)
     {
         $this->task = $task;
     }
 
-    /** */
     public function broadcastOn()
     {
         return [
-            new Channel('board.' . $this->task->story->sprint_id)
+            new Channel('board.'.$this->task->story->sprint_id),
         ];
     }
 
-    /** */
     public function broadcastAs()
     {
         return 'task.updated';

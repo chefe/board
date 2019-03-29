@@ -2,17 +2,16 @@
 
 namespace Tests\Feature\API;
 
-use App\User;
-use App\Sprint;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Team;
-use App\Story;
 use App\Task;
-use DatabaseSeeder;
-use TaskStateSeeder;
+use App\Team;
+use App\User;
+use App\Story;
+use App\Sprint;
 use App\TaskState;
+use DatabaseSeeder;
+use Tests\TestCase;
+use TaskStateSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class BoardTest extends TestCase
 {
@@ -41,10 +40,10 @@ class BoardTest extends TestCase
             ->assertJsonCount(TaskState::count(), 'states')
             ->assertJson([
                 'sprint' => [
-                    'caption' => $sprint->caption
+                    'caption' => $sprint->caption,
                 ],
                 'team' => [
-                    'caption' => $team->caption
+                    'caption' => $team->caption,
                 ],
                 'stories' => [
                     ['caption' => $stories[0]->caption],
@@ -57,7 +56,7 @@ class BoardTest extends TestCase
                     ['caption' => $tasksOfSecondStory[0]->caption],
                     ['caption' => $tasksOfSecondStory[1]->caption],
                     ['caption' => $tasksOfSecondStory[2]->caption],
-                ]
+                ],
             ]);
     }
 
@@ -75,18 +74,18 @@ class BoardTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'sprint' => [
-                    'caption' => $sprint->caption
+                    'caption' => $sprint->caption,
                 ],
                 'team' => [
-                    'caption' => $team->caption
-                ]
+                    'caption' => $team->caption,
+                ],
             ])->assertJsonMissing([
                 'stories' => [
                     ['caption' => $story->caption],
                 ],
                 'tasks' => [
                     ['caption' => $task->caption],
-                ]
+                ],
             ]);
     }
 

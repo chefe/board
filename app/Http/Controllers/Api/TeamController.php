@@ -9,17 +9,15 @@ use Illuminate\Support\Facades\Auth;
 
 class TeamController extends Controller
 {
-    /** */
     public function index()
     {
         return Team::get();
     }
 
-    /** */
     public function store(Request $request)
     {
         $data = $request->validate([
-            'caption' => 'required|string|min:3'
+            'caption' => 'required|string|min:3',
         ]);
 
         return Team::create([
@@ -28,21 +26,19 @@ class TeamController extends Controller
         ]);
     }
 
-    /** */
     public function show(Team $team)
     {
         $this->authorize('show', $team);
-        
+
         return $team;
     }
 
-    /** */
     public function update(Request $request, Team $team)
     {
         $this->authorize('edit', $team);
 
         $data = $request->validate([
-            'caption' => 'required|string|min:3'
+            'caption' => 'required|string|min:3',
         ]);
 
         $team->update([
@@ -52,7 +48,6 @@ class TeamController extends Controller
         return $team->fresh();
     }
 
-    /** */
     public function destroy(Team $team)
     {
         $this->authorize('delete', $team);

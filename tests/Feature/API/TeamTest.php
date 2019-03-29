@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\API;
 
-use App\User;
 use App\Team;
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -23,7 +23,7 @@ class TeamTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 ['caption' => 'Team 1'],
-                ['caption' => 'Team 2']
+                ['caption' => 'Team 2'],
             ]);
     }
 
@@ -50,19 +50,19 @@ class TeamTest extends TestCase
         $user = factory(User::class)->create();
 
         $this->assertDatabaseMissing('teams', [
-            'caption' => 'New Team'
+            'caption' => 'New Team',
         ]);
 
         $this->actingAs($user)
             ->post(route('team.store'), [
-                'caption' => 'New Team'
+                'caption' => 'New Team',
             ])->assertStatus(201)
             ->assertJson([
-                'caption' => 'New Team'
+                'caption' => 'New Team',
             ]);
 
         $this->assertDatabaseHas('teams', [
-            'caption' => 'New Team'
+            'caption' => 'New Team',
         ]);
     }
 
@@ -72,21 +72,21 @@ class TeamTest extends TestCase
         $user = factory(User::class)->create();
         $team = factory(Team::class)->create([
             'caption' => 'Old Name',
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
 
         $this->actingAs($user)
             ->put(route('team.update', $team), [
-                'caption' => 'New Name'
+                'caption' => 'New Name',
             ])->assertStatus(200)
             ->assertJson([
                 'id' => $team->id,
-                'caption' => 'New Name'
+                'caption' => 'New Name',
             ]);
 
         $this->assertDatabaseHas('teams', [
             'id' => $team->id,
-            'caption' => 'New Name'
+            'caption' => 'New Name',
         ]);
     }
 
@@ -98,12 +98,12 @@ class TeamTest extends TestCase
 
         $this->actingAs($user)
             ->put(route('team.update', $otherTeam), [
-                'caption' => 'Change'
+                'caption' => 'Change',
             ])->assertStatus(403);
 
         $this->assertDatabaseMissing('teams', [
             'id' => $otherTeam->id,
-            'caption' => 'Change'
+            'caption' => 'Change',
         ]);
     }
 
@@ -113,14 +113,14 @@ class TeamTest extends TestCase
         $user = factory(User::class)->create();
         $ownTeam = factory(Team::class)->create([
             'caption' => 'Own Team',
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
 
         $this->actingAs($user)
             ->get(route('team.show', $ownTeam))
             ->assertStatus(200)
             ->assertJson([
-                'caption' => 'Own Team'
+                'caption' => 'Own Team',
             ]);
     }
 

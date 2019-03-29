@@ -2,23 +2,21 @@
 
 namespace Tests\Feature\API;
 
-use App\User;
 use App\Team;
+use App\User;
 use App\Story;
 use App\Sprint;
 use Tests\TestCase;
-use App\Events\StoryDeleted;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Broadcast;
 use App\Events\StoryCreated;
+use App\Events\StoryDeleted;
 use App\Events\StoryUpdated;
 use Tests\InteractWithBroadcasting;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class StoryTest extends TestCase
 {
     use RefreshDatabase, InteractWithBroadcasting;
 
-    /** */
     public function setUp(): void
     {
         parent::setUp();
@@ -26,11 +24,11 @@ class StoryTest extends TestCase
         $this->user = factory(User::class)->create();
         $this->team = factory(Team::class)->create([
             'user_id' => $this->user->id,
-            'caption' => 'Own Team'
+            'caption' => 'Own Team',
         ]);
         $this->sprint = factory(Sprint::class)->create([
             'team_id' => $this->team->id,
-            'caption' => 'A first sprint'
+            'caption' => 'A first sprint',
         ]);
     }
 
@@ -39,12 +37,12 @@ class StoryTest extends TestCase
     {
         factory(Story::class)->create([
             'caption' => 'Story #1',
-            'sprint_id' => $this->sprint->id
+            'sprint_id' => $this->sprint->id,
         ]);
 
         factory(Story::class)->create([
             'caption' => 'Story #2',
-            'sprint_id' => $this->sprint->id
+            'sprint_id' => $this->sprint->id,
         ]);
 
         $this->actingAs($this->user)
@@ -61,7 +59,7 @@ class StoryTest extends TestCase
     {
         factory(Story::class)->create([
             'caption' => 'Story - Own Team',
-            'sprint_id' => $this->sprint->id
+            'sprint_id' => $this->sprint->id,
         ]);
 
         factory(Story::class)->create([
@@ -72,7 +70,7 @@ class StoryTest extends TestCase
             ->get(route('story.index', $this->sprint))
             ->assertStatus(200)
             ->assertJson([
-                ['caption' => 'Story - Own Team']
+                ['caption' => 'Story - Own Team'],
             ])->assertJsonMissing([
                 ['caption' => 'Story - Another Team'],
             ]);
@@ -85,7 +83,7 @@ class StoryTest extends TestCase
 
         factory(Story::class)->create([
             'caption' => 'Story - Own Team',
-            'sprint_id' => $otherSprint->id
+            'sprint_id' => $otherSprint->id,
         ]);
 
         $this->actingAs($this->user)
@@ -99,7 +97,7 @@ class StoryTest extends TestCase
         $validStoryData = [
             'caption' => 'A new story',
             'description' => 'Lorem ipsum ...',
-            'points' => 10
+            'points' => 10,
         ];
 
         $this->expectBroadcast(StoryCreated::class);
@@ -114,7 +112,7 @@ class StoryTest extends TestCase
             ->assertJson([
                 'caption' => 'A new story',
                 'description' => 'Lorem ipsum ...',
-                'points' => 10
+                'points' => 10,
             ]);
 
         $this->assertDatabaseHas('stories', [
@@ -130,7 +128,7 @@ class StoryTest extends TestCase
         $validStoryData = [
             'caption' => 'A new story',
             'description' => 'Lorem ipsum ...',
-            'points' => 10
+            'points' => 10,
         ];
 
         $this->expectNoBroadcast();
@@ -178,7 +176,7 @@ class StoryTest extends TestCase
     {
         $story = factory(Story::class)->create([
             'caption' => 'Story #1',
-            'sprint_id' => $this->sprint->id
+            'sprint_id' => $this->sprint->id,
         ]);
 
         $this->actingAs($this->user)
@@ -206,11 +204,11 @@ class StoryTest extends TestCase
     {
         $story = factory(Story::class)->create([
             'caption' => 'Story2Update',
-            'sprint_id' => $this->sprint->id
+            'sprint_id' => $this->sprint->id,
         ]);
 
         $validStoryData = [
-            'caption' => 'Story Updated'
+            'caption' => 'Story Updated',
         ];
 
         $this->expectBroadcastWithId(StoryUpdated::class, $story->id, 'story');
@@ -224,7 +222,7 @@ class StoryTest extends TestCase
             ->putJson(route('story.update', $story->id), $validStoryData)
             ->assertStatus(200)
             ->assertJson([
-                'caption' => 'Story Updated'
+                'caption' => 'Story Updated',
             ]);
 
         $this->assertDatabaseHas('stories', [
@@ -241,7 +239,7 @@ class StoryTest extends TestCase
         ]);
 
         $validStoryData = [
-            'caption' => 'Story Updated'
+            'caption' => 'Story Updated',
         ];
 
         $this->expectNoBroadcast();
@@ -265,33 +263,33 @@ class StoryTest extends TestCase
     public function a_user_can_move_a_story_to_a_new_sprint()
     {
         $story = factory(Story::class)->create([
-            'sprint_id' => $this->sprint->id
+            'sprint_id' => $this->sprint->id,
         ]);
 
         $newSprint = factory(Sprint::class)->create([
-            'team_id' => $this->team->id
+            'team_id' => $this->team->id,
         ]);
 
         $this->assertDatabaseHas('stories', [
             'id' => $story->id,
-            'sprint_id' => $this->sprint->id
+            'sprint_id' => $this->sprint->id,
         ]);
 
         $validStoryData = [
             'caption' => $story->caption,
-            'sprint_id' => $newSprint->id
+            'sprint_id' => $newSprint->id,
         ];
 
         $this->actingAs($this->user)
             ->putJson(route('story.update', $story), $validStoryData)
             ->assertStatus(200)
             ->assertJson([
-                'sprint_id' => $newSprint->id
+                'sprint_id' => $newSprint->id,
             ]);
 
         $this->assertDatabaseHas('stories', [
             'id' => $story->id,
-            'sprint_id' => $newSprint->id
+            'sprint_id' => $newSprint->id,
         ]);
     }
 
@@ -299,19 +297,19 @@ class StoryTest extends TestCase
     public function a_user_can_not_move_a_story_to_a_foreign_sprint()
     {
         $story = factory(Story::class)->create([
-            'sprint_id' => $this->sprint->id
+            'sprint_id' => $this->sprint->id,
         ]);
 
         $newSprint = factory(Sprint::class)->create();
 
         $this->assertDatabaseHas('stories', [
             'id' => $story->id,
-            'sprint_id' => $this->sprint->id
+            'sprint_id' => $this->sprint->id,
         ]);
 
         $storyData = [
             'caption' => $story->caption,
-            'sprint_id' => $newSprint->id
+            'sprint_id' => $newSprint->id,
         ];
 
         $this->actingAs($this->user)
@@ -321,7 +319,7 @@ class StoryTest extends TestCase
 
         $this->assertDatabaseHas('stories', [
             'id' => $story->id,
-            'sprint_id' => $this->sprint->id
+            'sprint_id' => $this->sprint->id,
         ]);
     }
 
@@ -330,7 +328,7 @@ class StoryTest extends TestCase
     {
         $story = factory(Story::class)->create([
             'caption' => 'Story2Delete',
-            'sprint_id' => $this->sprint->id
+            'sprint_id' => $this->sprint->id,
         ]);
 
         $this->expectBroadcastWithId(StoryDeleted::class, $story->id, 'story');
