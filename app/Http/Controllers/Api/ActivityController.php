@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
 {
-    /** */
     public function index()
     {
         $pagination = Auth::user()->actions()->latest()->paginate(36)->toArray();
@@ -33,7 +32,7 @@ class ActivityController extends Controller
                 'description' => $activity['description'],
                 'subject_type' => strtolower(str_replace('App\\', '', $activity['subject_type'])),
                 'subject_properties' => $activity['properties']['attributes'] ?? [],
-                'changes' => $changes
+                'changes' => $changes,
             ];
         })->all();
 

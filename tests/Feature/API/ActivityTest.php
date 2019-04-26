@@ -2,14 +2,14 @@
 
 namespace Tests\Feature\API;
 
-use DatabaseSeeder;
-use TaskStateSeeder;
-use App\Story;
-use App\User;
 use App\Task;
+use App\User;
+use App\Story;
+use DatabaseSeeder;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use TaskStateSeeder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ActivityTest extends TestCase
 {
@@ -22,7 +22,6 @@ class ActivityTest extends TestCase
         app(DatabaseSeeder::class)->call(TaskStateSeeder::class);
     }
 
-    /** */
     public function performActionsAsUser($user, $callback)
     {
         Auth::login($user);
@@ -50,7 +49,7 @@ class ActivityTest extends TestCase
             ]);
 
             $task->update([
-                'caption' => 'A very new task caption'
+                'caption' => 'A very new task caption',
             ]);
         });
 
@@ -62,13 +61,13 @@ class ActivityTest extends TestCase
                 'data' => [
                     ['description' => 'created'],
                     ['description' => 'updated', 'changes' => [
-                        'caption' => [], 'state_id' => []
+                        'caption' => [], 'state_id' => [],
                     ]],
                     ['description' => 'updated', 'changes' => [
-                        'caption' => []
+                        'caption' => [],
                     ]],
                 ],
-                'total' => 3
+                'total' => 3,
             ]);
     }
 
@@ -89,7 +88,7 @@ class ActivityTest extends TestCase
         ]);
 
         $task->update([
-            'caption' => 'A very new task caption'
+            'caption' => 'A very new task caption',
         ]);
 
         $this->actingAs($user)

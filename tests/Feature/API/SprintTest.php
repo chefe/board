@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\API;
 
-use App\User;
 use App\Team;
+use App\User;
 use App\Sprint;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,11 +19,11 @@ class SprintTest extends TestCase
         $this->user = factory(User::class)->create();
         $this->team = factory(Team::class)->create([
             'user_id' => $this->user->id,
-            'caption' => 'Own Team'
+            'caption' => 'Own Team',
         ]);
         $this->sprint = factory(Sprint::class)->create([
             'team_id' => $this->team->id,
-            'caption' => 'A first sprint'
+            'caption' => 'A first sprint',
         ]);
     }
 
@@ -32,7 +32,7 @@ class SprintTest extends TestCase
     {
         factory(Sprint::class)->create([
             'caption' => 'A second sprint',
-            'team_id' => $this->team->id
+            'team_id' => $this->team->id,
         ]);
 
         factory(Sprint::class)->create([
@@ -44,9 +44,9 @@ class SprintTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 ['caption' => 'A first sprint'],
-                ['caption' => 'A second sprint']
+                ['caption' => 'A second sprint'],
             ])->assertJsonMissing([
-                ['caption' => 'A sprint from another team']
+                ['caption' => 'A sprint from another team'],
             ]);
     }
 
@@ -64,7 +64,7 @@ class SprintTest extends TestCase
     public function a_user_can_create_a_sprint_for_his_team()
     {
         $this->assertDatabaseMissing('sprints', [
-            'caption' => 'A new sprint'
+            'caption' => 'A new sprint',
         ]);
 
         $this->actingAs($this->user)
@@ -80,7 +80,7 @@ class SprintTest extends TestCase
             ]);
 
         $this->assertDatabaseHas('sprints', [
-            'caption' => 'A new sprint'
+            'caption' => 'A new sprint',
         ]);
     }
 
@@ -96,7 +96,7 @@ class SprintTest extends TestCase
         ];
 
         $this->assertDatabaseMissing('sprints', [
-            'caption' => 'A new sprint'
+            'caption' => 'A new sprint',
         ]);
 
         $this->actingAs($this->user)
@@ -104,7 +104,7 @@ class SprintTest extends TestCase
             ->assertStatus(403);
 
         $this->assertDatabaseMissing('sprints', [
-            'caption' => 'A new sprint'
+            'caption' => 'A new sprint',
         ]);
     }
 
@@ -130,7 +130,7 @@ class SprintTest extends TestCase
             ->get(route('sprint.show', $this->sprint))
             ->assertStatus(200)
             ->assertJson([
-                'caption' => 'A first sprint'
+                'caption' => 'A first sprint',
             ]);
     }
 
@@ -154,7 +154,7 @@ class SprintTest extends TestCase
         ];
 
         $this->assertDatabaseMissing('sprints', [
-            'caption' => 'Updated caption'
+            'caption' => 'Updated caption',
         ]);
 
         $this->actingAs($this->user)
@@ -167,7 +167,7 @@ class SprintTest extends TestCase
             ]);
 
         $this->assertDatabaseHas('sprints', [
-            'caption' => 'Updated caption'
+            'caption' => 'Updated caption',
         ]);
     }
 
@@ -187,7 +187,7 @@ class SprintTest extends TestCase
             ->assertStatus(403);
 
         $this->assertDatabaseMissing('sprints', [
-            'caption' => 'Updated caption'
+            'caption' => 'Updated caption',
         ]);
     }
 
@@ -201,7 +201,7 @@ class SprintTest extends TestCase
         ];
 
         $this->assertDatabaseMissing('sprints', [
-            'caption' => 'Updated caption'
+            'caption' => 'Updated caption',
         ]);
 
         $this->actingAs($this->user)
@@ -210,7 +210,7 @@ class SprintTest extends TestCase
             ->assertJsonValidationErrors(['caption', 'end']);
 
         $this->assertDatabaseMissing('sprints', [
-            'caption' => 'Updated caption'
+            'caption' => 'Updated caption',
         ]);
     }
 
@@ -218,7 +218,7 @@ class SprintTest extends TestCase
     public function a_user_can_delete_his_sprints()
     {
         $this->assertDatabaseHas('sprints', [
-            'caption' => 'A first sprint'
+            'caption' => 'A first sprint',
         ]);
 
         $this->actingAs($this->user)
@@ -226,7 +226,7 @@ class SprintTest extends TestCase
             ->assertStatus(200);
 
         $this->assertDatabaseMissing('sprints', [
-            'caption' => 'A first sprint'
+            'caption' => 'A first sprint',
         ]);
     }
 
@@ -234,11 +234,11 @@ class SprintTest extends TestCase
     public function a_user_can_only_delete_his_sprints()
     {
         $otherSprint = factory(Sprint::class)->create([
-            'caption' => 'A sprint to delete'
+            'caption' => 'A sprint to delete',
         ]);
 
         $this->assertDatabaseHas('sprints', [
-            'caption' => 'A sprint to delete'
+            'caption' => 'A sprint to delete',
         ]);
 
         $this->actingAs($this->user)
@@ -246,7 +246,7 @@ class SprintTest extends TestCase
             ->assertStatus(403);
 
         $this->assertDatabaseHas('sprints', [
-            'caption' => 'A sprint to delete'
+            'caption' => 'A sprint to delete',
         ]);
     }
 }

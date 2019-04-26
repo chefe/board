@@ -6,18 +6,16 @@ use Illuminate\Support\Facades\Broadcast;
 
 trait InteractWithBroadcasting
 {
-    /** */
     protected function expectBroadcast($class)
     {
         Broadcast::spy()
             ->shouldReceive('event')
             ->once()
             ->withArgs(function ($e) use ($class) {
-                return (get_class($e) == $class);
+                return get_class($e) == $class;
             });
     }
 
-    /** */
     protected function expectBroadcastWithId($class, $id, $property)
     {
         Broadcast::spy()
@@ -29,7 +27,6 @@ trait InteractWithBroadcasting
             });
     }
 
-    /** */
     protected function expectNoBroadcast()
     {
         Broadcast::spy()->shouldReceive('event')->never();

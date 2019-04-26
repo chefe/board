@@ -2,20 +2,17 @@
 
 namespace Tests\Feature\API;
 
-use DatabaseSeeder;
-use TaskStateSeeder;
-use App\User;
-use App\Team;
-use App\Sprint;
-use App\Story;
 use App\Task;
+use App\User;
+use App\Story;
+use DatabaseSeeder;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Broadcast;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\InteractWithBroadcasting;
+use TaskStateSeeder;
 use App\Events\TaskCreated;
 use App\Events\TaskDeleted;
 use App\Events\TaskUpdated;
+use Tests\InteractWithBroadcasting;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TaskTest extends TestCase
 {
@@ -178,7 +175,7 @@ class TaskTest extends TestCase
             'caption' => 'Old caption',
             'description' => 'Old description',
             'state_id' => 2,
-            'story_id' => $story->id
+            'story_id' => $story->id,
         ]);
 
         $validaTaskData = [
@@ -199,7 +196,7 @@ class TaskTest extends TestCase
             ->assertJson([
                 'caption' => 'The new caption',
                 'description' => null,
-                'state_id' => 1
+                'state_id' => 1,
             ]);
 
         $this->assertDatabaseHas('tasks', [

@@ -2,8 +2,8 @@
 
 use App\Team;
 use App\Sprint;
-use Illuminate\Support\Carbon;
 use Faker\Generator as Faker;
+use Illuminate\Support\Carbon;
 
 $factory->define(Sprint::class, function (Faker $faker) {
     $startDate = $faker->date;
@@ -14,6 +14,6 @@ $factory->define(Sprint::class, function (Faker $faker) {
         'end' => Carbon::parse($startDate)->addDays(14),
         'team_id' => function () {
             return factory(Team::class)->create()->id;
-        }
+        },
     ];
 });

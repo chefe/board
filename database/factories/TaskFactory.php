@@ -14,6 +14,6 @@ $factory->define(Task::class, function (Faker $faker) {
         },
         'state_id' => function () use ($faker) {
             return $faker->randomElement(TaskState::pluck('id')->all());
-        }
+        },
     ];
 });

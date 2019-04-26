@@ -11,24 +11,20 @@ class StoryUpdated implements ShouldBroadcast
 {
     use SerializesModels;
 
-    /** */
     public $story;
 
-    /** */
     public function __construct(Story $story)
     {
         $this->story = $story;
     }
 
-    /** */
     public function broadcastOn()
     {
         return [
-            new Channel('board.' . $this->story->sprint_id)
+            new Channel('board.'.$this->story->sprint_id),
         ];
     }
 
-    /** */
     public function broadcastAs()
     {
         return 'story.updated';

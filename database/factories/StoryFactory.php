@@ -11,6 +11,6 @@ $factory->define(Story::class, function (Faker $faker) {
         'points' => $faker->numberBetween(1, 21),
         'sprint_id' => function () {
             return factory(Sprint::class)->create()->id;
-        }
+        },
     ];
 });
