@@ -15,12 +15,10 @@ class ActivityController extends Controller
         $pagination['data'] = collect($pagination['data'])->map(function ($activity) {
             $changes = $activity['properties']->toArray();
 
-            if (array_key_exists('attributes', $changes)) {
+            if (array_key_exists('old', $changes) && array_key_exists('attributes', $changes)) {
                 $keys = collect(array_keys($changes['attributes']));
 
-                $changes = $keys->filter(function ($key) use ($changes) {
-                    return array_key_exists('old', $changes);
-                })->reject(function ($key) use ($changes) {
+                $changes = $keys->reject(function ($key) use ($changes) {
                     return $changes['attributes'][$key] == $changes['old'][$key];
                 })->mapWithKeys(function ($key) use ($changes) {
                     return [$key => [
