@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
 use App\Story;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class StoryPolicy

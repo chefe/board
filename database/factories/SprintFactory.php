@@ -1,7 +1,7 @@
 <?php
 
-use App\Team;
 use App\Sprint;
+use App\Team;
 use Faker\Generator as Faker;
 use Illuminate\Support\Carbon;
 

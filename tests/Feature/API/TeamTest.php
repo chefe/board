@@ -4,8 +4,8 @@ namespace Tests\Feature\API;
 
 use App\Team;
 use App\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class TeamTest extends TestCase
 {

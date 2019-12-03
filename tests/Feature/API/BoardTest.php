@@ -2,16 +2,16 @@
 
 namespace Tests\Feature\API;
 
+use App\Sprint;
+use App\Story;
 use App\Task;
+use App\TaskState;
 use App\Team;
 use App\User;
-use App\Story;
-use App\Sprint;
-use App\TaskState;
 use DatabaseSeeder;
-use Tests\TestCase;
-use TaskStateSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use TaskStateSeeder;
+use Tests\TestCase;
 
 class BoardTest extends TestCase
 {

@@ -1,7 +1,7 @@
 <?php
 
-use App\Task;
 use App\Story;
+use App\Task;
 use App\TaskState;
 use Faker\Generator as Faker;
 

@@ -3,8 +3,8 @@
 namespace Tests\Feature\API;
 
 use App\TaskState;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class TaskStateTest extends TestCase
 {

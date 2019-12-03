@@ -4,8 +4,8 @@ namespace App\Events;
 
 use App\Story;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Queue\SerializesModels;
 
 class StoryCreated implements ShouldBroadcast
 {
