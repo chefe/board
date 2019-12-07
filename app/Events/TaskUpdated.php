@@ -4,8 +4,8 @@ namespace App\Events;
 
 use App\Task;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Queue\SerializesModels;
 
 class TaskUpdated implements ShouldBroadcast
 {

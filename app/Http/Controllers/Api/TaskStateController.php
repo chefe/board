@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\TaskState;
 use App\Http\Controllers\Controller;
+use App\TaskState;
 
 class TaskStateController extends Controller
 {

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Task;
-use App\Story;
-use App\TaskState;
 use App\Events\TaskCreated;
 use App\Events\TaskDeleted;
 use App\Events\TaskUpdated;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Story;
+use App\Task;
+use App\TaskState;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {

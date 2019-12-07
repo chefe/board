@@ -2,14 +2,14 @@
 
 namespace Tests\Feature\API;
 
+use App\Story;
 use App\Task;
 use App\User;
-use App\Story;
 use DatabaseSeeder;
-use Tests\TestCase;
-use TaskStateSeeder;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
+use TaskStateSeeder;
+use Tests\TestCase;
 
 class ActivityTest extends TestCase
 {

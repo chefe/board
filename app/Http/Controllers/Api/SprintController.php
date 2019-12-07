@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Team;
-use App\Sprint;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Sprint;
+use App\Team;
+use Illuminate\Http\Request;
 
 class SprintController extends Controller
 {

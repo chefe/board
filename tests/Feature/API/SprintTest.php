@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\API;
 
+use App\Sprint;
 use App\Team;
 use App\User;
-use App\Sprint;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class SprintTest extends TestCase
 {

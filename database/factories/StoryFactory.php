@@ -1,7 +1,7 @@
 <?php
 
-use App\Story;
 use App\Sprint;
+use App\Story;
 use Faker\Generator as Faker;
 
 $factory->define(Story::class, function (Faker $faker) {

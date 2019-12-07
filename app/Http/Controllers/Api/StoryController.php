@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Story;
-use App\Sprint;
 use App\Events\StoryCreated;
 use App\Events\StoryDeleted;
 use App\Events\StoryUpdated;
+use App\Http\Controllers\Controller;
+use App\Sprint;
+use App\Story;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Http\Controllers\Controller;
 
 class StoryController extends Controller
 {

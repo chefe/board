@@ -2,17 +2,17 @@
 
 namespace Tests\Feature\API;
 
-use App\Task;
-use App\User;
-use App\Story;
-use DatabaseSeeder;
-use Tests\TestCase;
-use TaskStateSeeder;
 use App\Events\TaskCreated;
 use App\Events\TaskDeleted;
 use App\Events\TaskUpdated;
-use Tests\InteractWithBroadcasting;
+use App\Story;
+use App\Task;
+use App\User;
+use DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use TaskStateSeeder;
+use Tests\InteractWithBroadcasting;
+use Tests\TestCase;
 
 class TaskTest extends TestCase
 {

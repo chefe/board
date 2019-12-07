@@ -2,16 +2,16 @@
 
 namespace Tests\Feature\API;
 
-use App\Team;
-use App\User;
-use App\Story;
-use App\Sprint;
-use Tests\TestCase;
 use App\Events\StoryCreated;
 use App\Events\StoryDeleted;
 use App\Events\StoryUpdated;
-use Tests\InteractWithBroadcasting;
+use App\Sprint;
+use App\Story;
+use App\Team;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\InteractWithBroadcasting;
+use Tests\TestCase;
 
 class StoryTest extends TestCase
 {
