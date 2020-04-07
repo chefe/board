@@ -2024,8 +2024,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['state', 'story', 'tasks', 'draggingTask'],
+  props: ['state', 'story', 'tasks', 'draggingTask', 'editMode'],
   methods: {
     onDrop: function onDrop(event, state, story) {
       if (!this.draggingTask) {
@@ -2045,6 +2046,16 @@ __webpack_require__.r(__webpack_exports__);
 
       if (activeTask && (activeTask.state_id != state.id || activeTask.story_id != story.id)) {
         event.preventDefault();
+      }
+    },
+    addNewTask: function addNewTask(event, story) {
+      if (event.target == this.$el && this.editMode) {
+        this.$router.push({
+          name: 'task.create',
+          params: {
+            storyId: story.id
+          }
+        });
       }
     }
   }
@@ -2870,6 +2881,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -31207,6 +31219,9 @@ var render = function() {
         },
         dragover: function($event) {
           return _vm.onDragOver($event, _vm.state, _vm.story)
+        },
+        dblclick: function($event) {
+          return _vm.addNewTask($event, _vm.story)
         }
       }
     },
@@ -32529,6 +32544,7 @@ var render = function() {
                             attrs: {
                               state: state,
                               story: story,
+                              editMode: _vm.editMode,
                               "dragging-task": _vm.draggingTask
                             }
                           },

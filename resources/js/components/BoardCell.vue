@@ -2,6 +2,7 @@
     <td
         @drop="onDrop($event, state, story)"
         @dragover="onDragOver($event, state, story)"
+        @dblclick="addNewTask($event, story)"
         class="pb-1 border-left border-left-dashed">
         <slot></slot>
     </td>
@@ -9,7 +10,7 @@
 
 <script>
     export default {
-        props: ['state', 'story', 'tasks', 'draggingTask'],
+        props: ['state', 'story', 'tasks', 'draggingTask', 'editMode'],
         methods: {
             onDrop(event, state, story) {
                 if (!this.draggingTask) {
@@ -28,6 +29,14 @@
 
                 if (activeTask && (activeTask.state_id != state.id || activeTask.story_id != story.id)) {
                     event.preventDefault();
+                }
+            },
+            addNewTask(event, story) {
+                if (event.target == this.$el && this.editMode) {
+                    this.$router.push({
+                        name: 'task.create',
+                        params: { storyId: story.id }
+                    })
                 }
             },
         }

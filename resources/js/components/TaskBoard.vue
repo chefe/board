@@ -55,6 +55,7 @@
                                 v-for="state in states"
                                 :state="state"
                                 :story="story"
+                                :editMode="editMode"
                                 :dragging-task="draggingTask"
                                 :key="'cell' + story.id + '-' + state.id">
                                 <task
