@@ -1,6 +1,4 @@
 
-window._ = require('lodash');
-
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
@@ -55,5 +53,5 @@ window.Echo = new Echo({
     wsPort: 6001,
     disableStats: true,
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    forceTLS: true
+    forceTLS: process.env.NODE_ENV === 'production',
 });
