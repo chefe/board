@@ -12,7 +12,7 @@ class ActivityController extends Controller
         $pagination = Auth::user()->actions()->latest()->paginate(36)->toArray();
 
         $pagination['data'] = collect($pagination['data'])->map(function ($activity) {
-            $changes = $activity['properties']->toArray();
+            $changes = $activity['properties'];
 
             if (array_key_exists('old', $changes) && array_key_exists('attributes', $changes)) {
                 $keys = collect(array_keys($changes['attributes']));
