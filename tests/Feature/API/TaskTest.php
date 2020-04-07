@@ -8,6 +8,8 @@ use App\Events\TaskUpdated;
 use App\Story;
 use App\Task;
 use App\User;
+use App\Sprint;
+use App\Team;
 use DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use TaskStateSeeder;
@@ -229,6 +231,76 @@ class TaskTest extends TestCase
 
         $this->assertDatabaseHas('tasks', [
             'caption' => 'The old caption',
+        ]);
+    }
+
+    /** @test */
+    public function a_user_can_move_a_task_to_another_story()
+    {
+        $sprint = factory(Sprint::class)->create();
+        $user = $sprint->team->owner;
+
+        $storyOne = factory(Story::class)->create(['sprint_id' => $sprint->id]);
+        $storyTwo = factory(Story::class)->create(['sprint_id' => $sprint->id]);
+
+        $task = factory(Task::class)->create([
+            'story_id' => $storyOne->id,
+        ]);
+
+        $this->assertDatabaseHas('tasks', [
+            'id' => $task->id,
+            'story_id' => $storyOne->id,
+        ]);
+
+        $this->expectBroadcastWithId(TaskUpdated::class, $task->id, 'task');
+
+        $this->actingAs($user)
+             ->putJson(route('task.update', $task), [
+                 'story_id' => $storyTwo->id
+             ])
+             ->assertStatus(200)
+             ->assertJson([
+                 'story_id' => $storyTwo->id,
+             ]);
+
+        $this->assertDatabaseHas('tasks', [
+            'id' => $task->id,
+            'story_id' => $storyTwo->id,
+        ]);
+    }
+
+    /** @test */
+    public function a_user_can_not_move_a_task_to_story_in_another_sprint()
+    {
+        $team = factory(Team::class)->create();
+        $user = $team->owner;
+
+        $sprintOne = factory(Sprint::class)->create(['team_id' => $team->id]);
+        $sprintTwo = factory(Sprint::class)->create(['team_id' => $team->id]);
+
+        $storyOne = factory(Story::class)->create(['sprint_id' => $sprintOne->id]);
+        $storyTwo = factory(Story::class)->create(['sprint_id' => $sprintTwo->id]);
+
+        $task = factory(Task::class)->create([
+            'story_id' => $storyOne->id,
+        ]);
+
+        $this->assertDatabaseHas('tasks', [
+            'id' => $task->id,
+            'story_id' => $storyOne->id,
+        ]);
+
+        $this->expectNoBroadcast();
+
+        $this->actingAs($user)
+             ->putJson(route('task.update', $task), [
+                 'story_id' => $storyTwo->id
+             ])
+             ->assertStatus(422);
+
+        $this->assertDatabaseHas('tasks', [
+            'id' => $task->id,
+            'story_id' => $storyOne->id,
         ]);
     }
 

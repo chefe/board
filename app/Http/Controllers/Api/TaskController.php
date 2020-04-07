@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Story;
 use App\Task;
 use App\TaskState;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -55,6 +56,12 @@ class TaskController extends Controller
             'caption' => 'string|min:3',
             'description' => 'nullable|string|min:3',
             'state_id' => 'integer|exists:task_states,id',
+            'story_id' => [
+                'integer',
+                Rule::exists('stories', 'id')->where(function ($query) use ($task) {
+                    $query->where('sprint_id', $task->story->sprint_id);
+                }),
+            ],
         ]);
 
         $task->update($data);

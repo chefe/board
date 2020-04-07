@@ -2027,14 +2027,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['state', 'story', 'tasks', 'draggingTask'],
   methods: {
-    onDrop: function onDrop(event, state) {
+    onDrop: function onDrop(event, state, story) {
       if (!this.draggingTask) {
         return;
       }
 
       var url = "/api/task/".concat(this.draggingTask.id);
       var putData = {
-        state_id: state.id
+        state_id: state.id,
+        story_id: story.id
       };
       axios.put(url, putData).then(function (response) {});
       event.preventDefault();
@@ -2042,7 +2043,7 @@ __webpack_require__.r(__webpack_exports__);
     onDragOver: function onDragOver(event, state, story) {
       var activeTask = this.draggingTask;
 
-      if (activeTask && activeTask.state_id != state.id && activeTask.story_id == story.id) {
+      if (activeTask && (activeTask.state_id != state.id || activeTask.story_id != story.id)) {
         event.preventDefault();
       }
     }
@@ -31159,7 +31160,7 @@ var render = function() {
       staticClass: "pb-1 border-left border-left-dashed",
       on: {
         drop: function($event) {
-          return _vm.onDrop($event, _vm.state)
+          return _vm.onDrop($event, _vm.state, _vm.story)
         },
         dragover: function($event) {
           return _vm.onDragOver($event, _vm.state, _vm.story)
