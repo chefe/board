@@ -5,11 +5,11 @@ namespace Tests\Feature\API;
 use App\Events\TaskCreated;
 use App\Events\TaskDeleted;
 use App\Events\TaskUpdated;
+use App\Sprint;
 use App\Story;
 use App\Task;
-use App\User;
-use App\Sprint;
 use App\Team;
+use App\User;
 use DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use TaskStateSeeder;
@@ -256,7 +256,7 @@ class TaskTest extends TestCase
 
         $this->actingAs($user)
              ->putJson(route('task.update', $task), [
-                 'story_id' => $storyTwo->id
+                 'story_id' => $storyTwo->id,
              ])
              ->assertStatus(200)
              ->assertJson([
@@ -294,7 +294,7 @@ class TaskTest extends TestCase
 
         $this->actingAs($user)
              ->putJson(route('task.update', $task), [
-                 'story_id' => $storyTwo->id
+                 'story_id' => $storyTwo->id,
              ])
              ->assertStatus(422);
 

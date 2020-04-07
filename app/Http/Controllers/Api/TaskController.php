@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Story;
 use App\Task;
 use App\TaskState;
-use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class TaskController extends Controller
 {
