@@ -32409,203 +32409,199 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { class: { container: !_vm.fullscreenMode, "px-5": _vm.fullscreenMode } },
-    [
-      _c("div", { staticClass: "row mb-4" }, [
-        _c("div", { staticClass: "col d-flex" }, [
-          _c("nav", { staticClass: "flex-grow-1" }, [
-            _c("ol", { staticClass: "breadcrumb bg-transparent px-0 mb-0" }, [
-              _c(
-                "li",
-                { staticClass: "breadcrumb-item" },
-                [
-                  _c("router-link", {
-                    attrs: {
-                      to: {
-                        name: "sprint.index",
-                        params: { teamId: _vm.team.id }
-                      }
-                    },
-                    domProps: { textContent: _vm._s(_vm.team.caption) }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("li", { staticClass: "breadcrumb-item active" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.sprint.caption) +
-                    "\n                        "
-                ),
-                _c("small", {
-                  staticClass: "ml-2",
-                  domProps: { textContent: _vm._s(_vm.sprintDuration) }
-                })
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "btn-group" }, [
+  return _c("div", { staticClass: "px-5" }, [
+    _c("div", { staticClass: "row mb-4" }, [
+      _c("div", { staticClass: "col d-flex" }, [
+        _c("nav", { staticClass: "flex-grow-1" }, [
+          _c("ol", { staticClass: "breadcrumb bg-transparent px-0 mb-0" }, [
             _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-dark",
-                class: { active: _vm.detailMode },
-                on: {
-                  click: function($event) {
-                    _vm.detailMode = !_vm.detailMode
-                  }
-                }
-              },
-              [_vm._v("Show Details")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-dark",
-                class: { active: _vm.fullscreenMode },
-                on: { click: _vm.toggleFullscreen }
-              },
-              [_vm._v("Fullscreen Mode")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-dark",
-                class: { active: _vm.editMode },
-                on: {
-                  click: function($event) {
-                    _vm.editMode = !_vm.editMode
-                  }
-                }
-              },
-              [_vm._v("Edit Mode")]
-            )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col" }, [
-          _c("table", { staticClass: "table" }, [
-            _c("thead", [
-              _c(
-                "tr",
-                [
-                  _c("th", { attrs: { width: _vm.tableColWidth } }, [
-                    _vm._v("STORIES")
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.states, function(state) {
-                    return _c("th", { attrs: { width: _vm.tableColWidth } }, [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(state.caption.toUpperCase()) +
-                          "\n                            "
-                      ),
-                      _c("span", { staticClass: "badge badge-secondary" }, [
-                        _vm._v(_vm._s(_vm.getTaskCountForState(state)))
-                      ])
-                    ])
-                  })
-                ],
-                2
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "tbody",
+              "li",
+              { staticClass: "breadcrumb-item" },
               [
-                _vm._l(_vm.stories, function(story) {
-                  return _c(
-                    "tr",
-                    [
-                      _c(
-                        "td",
-                        [
-                          _c("story", {
-                            attrs: { story: story, editMode: _vm.editMode },
-                            on: { deleteStory: _vm.deleteStory }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _vm._l(_vm.states, function(state) {
-                        return _c(
-                          "board-cell",
-                          {
-                            key: "cell" + story.id + "-" + state.id,
-                            attrs: {
-                              state: state,
-                              story: story,
-                              editMode: _vm.editMode,
-                              "dragging-task": _vm.draggingTask
-                            }
-                          },
-                          _vm._l(_vm.getTasksForState(story, state), function(
-                            task
-                          ) {
-                            return _c("task", {
-                              key: "task-" + task.id,
-                              attrs: {
-                                showTaskDescription: _vm.detailMode,
-                                editMode: _vm.editMode,
-                                task: task
-                              },
-                              on: {
-                                "begin-dragging": _vm.onBeginDragging,
-                                "end-dragging": _vm.onEndDragging
-                              }
-                            })
-                          }),
-                          1
-                        )
-                      })
-                    ],
-                    2
-                  )
-                }),
+                _c("router-link", {
+                  attrs: {
+                    to: {
+                      name: "sprint.index",
+                      params: { teamId: _vm.team.id }
+                    }
+                  },
+                  domProps: { textContent: _vm._s(_vm.team.caption) }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("li", { staticClass: "breadcrumb-item active" }, [
+              _vm._v(
+                "\n                        " +
+                  _vm._s(_vm.sprint.caption) +
+                  "\n                        "
+              ),
+              _c("small", {
+                staticClass: "ml-2",
+                domProps: { textContent: _vm._s(_vm.sprintDuration) }
+              })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "btn-group" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-dark",
+              class: { active: _vm.detailMode },
+              on: {
+                click: function($event) {
+                  _vm.detailMode = !_vm.detailMode
+                }
+              }
+            },
+            [_vm._v("Show Details")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-dark",
+              class: { active: _vm.fullscreenMode },
+              on: { click: _vm.toggleFullscreen }
+            },
+            [_vm._v("Fullscreen Mode")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-dark",
+              class: { active: _vm.editMode },
+              on: {
+                click: function($event) {
+                  _vm.editMode = !_vm.editMode
+                }
+              }
+            },
+            [_vm._v("Edit Mode")]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col" }, [
+        _c("table", { staticClass: "table" }, [
+          _c("thead", [
+            _c(
+              "tr",
+              [
+                _c("th", { attrs: { width: _vm.tableColWidth } }, [
+                  _vm._v("STORIES")
+                ]),
                 _vm._v(" "),
-                _vm.editMode
-                  ? _c("tr", [
-                      _c(
-                        "td",
-                        {
-                          staticClass: "p-0 pt-1",
-                          attrs: { colspan: _vm.states.length + 1 }
-                        },
-                        [
-                          _c(
-                            "button",
-                            {
-                              staticClass:
-                                "btn btn-block btn-light p-3 text-muted rounded-0 border border-dashed",
-                              on: { click: _vm.addNewStory }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                Add a new story\n                            "
-                              )
-                            ]
-                          )
-                        ]
-                      )
+                _vm._l(_vm.states, function(state) {
+                  return _c("th", { attrs: { width: _vm.tableColWidth } }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(state.caption.toUpperCase()) +
+                        "\n                            "
+                    ),
+                    _c("span", { staticClass: "badge badge-secondary" }, [
+                      _vm._v(_vm._s(_vm.getTaskCountForState(state)))
                     ])
-                  : _vm._e()
+                  ])
+                })
               ],
               2
             )
-          ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            [
+              _vm._l(_vm.stories, function(story) {
+                return _c(
+                  "tr",
+                  [
+                    _c(
+                      "td",
+                      [
+                        _c("story", {
+                          attrs: { story: story, editMode: _vm.editMode },
+                          on: { deleteStory: _vm.deleteStory }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _vm._l(_vm.states, function(state) {
+                      return _c(
+                        "board-cell",
+                        {
+                          key: "cell" + story.id + "-" + state.id,
+                          attrs: {
+                            state: state,
+                            story: story,
+                            editMode: _vm.editMode,
+                            "dragging-task": _vm.draggingTask
+                          }
+                        },
+                        _vm._l(_vm.getTasksForState(story, state), function(
+                          task
+                        ) {
+                          return _c("task", {
+                            key: "task-" + task.id,
+                            attrs: {
+                              showTaskDescription: _vm.detailMode,
+                              editMode: _vm.editMode,
+                              task: task
+                            },
+                            on: {
+                              "begin-dragging": _vm.onBeginDragging,
+                              "end-dragging": _vm.onEndDragging
+                            }
+                          })
+                        }),
+                        1
+                      )
+                    })
+                  ],
+                  2
+                )
+              }),
+              _vm._v(" "),
+              _vm.editMode
+                ? _c("tr", [
+                    _c(
+                      "td",
+                      {
+                        staticClass: "p-0 pt-1",
+                        attrs: { colspan: _vm.states.length + 1 }
+                      },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-block btn-light p-3 text-muted rounded-0 border border-dashed",
+                            on: { click: _vm.addNewStory }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Add a new story\n                            "
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                : _vm._e()
+            ],
+            2
+          )
         ])
       ])
-    ]
-  )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

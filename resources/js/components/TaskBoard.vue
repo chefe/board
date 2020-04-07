@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ 'container': !fullscreenMode, 'px-5': fullscreenMode }">
+    <div class="px-5">
         <div class="row mb-4">
             <div class="col d-flex">
                 <nav class="flex-grow-1">
