@@ -22,7 +22,7 @@
                         :class="{ 'active': detailMode}">Show Details</button>
                     <button
                         class="btn btn-outline-dark"
-                        @click="fullscreenMode = !fullscreenMode"
+                        @click="toggleFullscreen"
                         :class="{ 'active': fullscreenMode }">Fullscreen Mode</button>
                     <button
                         class="btn btn-outline-dark"
@@ -109,9 +109,6 @@
             detailMode: function (newMode, oldMode) {
                 localStorage.detailMode = newMode;
             },
-            fullscreenMode: function (newMode, oldMode) {
-                localStorage.fullscreenMode = newMode;
-            },
             editMode: function (newMode, oldMode) {
                 localStorage.editMode = newMode;
             },
@@ -128,9 +125,6 @@
             loadSettings() {
                 if (localStorage.detailMode != undefined) {
                     this.detailMode = (localStorage.detailMode == "true");
-                }
-                if (localStorage.fullscreenMode != undefined) {
-                    this.fullscreenMode = (localStorage.fullscreenMode == "true");
                 }
                 if (localStorage.editMode != undefined) {
                     this.editMode = (localStorage.editMode == "true");
@@ -206,10 +200,63 @@
                 this.stories = this.stories.filter(s => s.id != storyId);
                 this.tasks = this.tasks.filter(t => t.story_id != storyId);
             },
+            toggleFullscreen() {
+                if (this.fullscreenMode) {
+                    this.exitFullscreen();
+                } else {
+                    this.enterFullscreen();
+                }
+            },
+            enterFullscreen() {
+                let element = document.querySelector('main');
+
+                if (element.requestFullScreen) {
+                    element.requestFullScreen();
+                } else if (element.webkitRequestFullScreen ) {
+                    element.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+                } else if (element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen();
+                } else if (element.msRequestFullscreen) {
+                    element.msRequestFullscreen();
+                }
+            },
+            exitFullscreen() {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+            },
+            fullscreenChanged() {
+                this.fullscreenMode = Boolean(document.fullscreen)
+                    || Boolean(document.mozFullScreen)
+                    || Boolean(document.webkitFullScreen)
+                    || Boolean(document.msRequestFullscreen);
+            },
+            addFullscreenChangedListener() {
+                document.addEventListener('fullscreenchange', this.fullscreenChanged)
+                document.addEventListener('mozfullscreenchange', this.fullscreenChanged)
+                document.addEventListener('MSFullscreenChange', this.fullscreenChanged)
+                document.addEventListener('webkitfullscreenchange', this.fullscreenChanged)
+            },
+            removeFullscreenChangedListener() {
+                document.removeEventListener('fullscreenchange', this.fullscreenChanged)
+                document.removeEventListener('mozfullscreenchange', this.fullscreenChanged)
+                document.removeEventListener('MSFullscreenChange', this.fullscreenChanged)
+                document.removeEventListener('webkitfullscreenchange', this.fullscreenChanged)
+            }
         },
         mounted() {
             this.loadSettings();
             this.fetchData();
+            this.addFullscreenChangedListener();
+        },
+        beforeDestroy() {
+            this.removeFullscreenChangedListener();
         }
     }
 </script>

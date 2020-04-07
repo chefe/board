@@ -2980,9 +2980,6 @@ __webpack_require__.r(__webpack_exports__);
     detailMode: function detailMode(newMode, oldMode) {
       localStorage.detailMode = newMode;
     },
-    fullscreenMode: function fullscreenMode(newMode, oldMode) {
-      localStorage.fullscreenMode = newMode;
-    },
     editMode: function editMode(newMode, oldMode) {
       localStorage.editMode = newMode;
     }
@@ -2999,10 +2996,6 @@ __webpack_require__.r(__webpack_exports__);
     loadSettings: function loadSettings() {
       if (localStorage.detailMode != undefined) {
         this.detailMode = localStorage.detailMode == "true";
-      }
-
-      if (localStorage.fullscreenMode != undefined) {
-        this.fullscreenMode = localStorage.fullscreenMode == "true";
       }
 
       if (localStorage.editMode != undefined) {
@@ -3091,11 +3084,61 @@ __webpack_require__.r(__webpack_exports__);
       this.tasks = this.tasks.filter(function (t) {
         return t.story_id != storyId;
       });
+    },
+    toggleFullscreen: function toggleFullscreen() {
+      if (this.fullscreenMode) {
+        this.exitFullscreen();
+      } else {
+        this.enterFullscreen();
+      }
+    },
+    enterFullscreen: function enterFullscreen() {
+      var element = document.querySelector('main');
+
+      if (element.requestFullScreen) {
+        element.requestFullScreen();
+      } else if (element.webkitRequestFullScreen) {
+        element.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+      } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+      } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+      }
+    },
+    exitFullscreen: function exitFullscreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    },
+    fullscreenChanged: function fullscreenChanged() {
+      this.fullscreenMode = Boolean(document.fullscreen) || Boolean(document.mozFullScreen) || Boolean(document.webkitFullScreen) || Boolean(document.msRequestFullscreen);
+    },
+    addFullscreenChangedListener: function addFullscreenChangedListener() {
+      document.addEventListener('fullscreenchange', this.fullscreenChanged);
+      document.addEventListener('mozfullscreenchange', this.fullscreenChanged);
+      document.addEventListener('MSFullscreenChange', this.fullscreenChanged);
+      document.addEventListener('webkitfullscreenchange', this.fullscreenChanged);
+    },
+    removeFullscreenChangedListener: function removeFullscreenChangedListener() {
+      document.removeEventListener('fullscreenchange', this.fullscreenChanged);
+      document.removeEventListener('mozfullscreenchange', this.fullscreenChanged);
+      document.removeEventListener('MSFullscreenChange', this.fullscreenChanged);
+      document.removeEventListener('webkitfullscreenchange', this.fullscreenChanged);
     }
   },
   mounted: function mounted() {
     this.loadSettings();
     this.fetchData();
+    this.addFullscreenChangedListener();
+  },
+  beforeDestroy: function beforeDestroy() {
+    this.removeFullscreenChangedListener();
   }
 });
 
@@ -32410,11 +32453,7 @@ var render = function() {
               {
                 staticClass: "btn btn-outline-dark",
                 class: { active: _vm.fullscreenMode },
-                on: {
-                  click: function($event) {
-                    _vm.fullscreenMode = !_vm.fullscreenMode
-                  }
-                }
+                on: { click: _vm.toggleFullscreen }
               },
               [_vm._v("Fullscreen Mode")]
             ),
